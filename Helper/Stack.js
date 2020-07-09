@@ -3,8 +3,13 @@ import { createAppContainer } from "react-navigation";
 
 import Login from "../Screens/Auth/Login";
 import SignUp from "../Screens/Auth/SignUp";
+import Loading from "../Screens/Loading";
+import Home from "../Screens/Monitor/Home";
 
-const screens = {
+let screens = {
+  Loading: {
+    screen: Loading,
+  },
   Login: {
     screen: Login,
   },

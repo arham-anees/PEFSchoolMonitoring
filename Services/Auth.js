@@ -95,3 +95,14 @@ export function SignOut() {
 //   }
 //   //Do other things
 // });
+
+export function IsAuthenticated() {
+  let IsSignedIn = false;
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      IsSignedIn = true;
+      console.log("all good to go");
+    }
+  });
+  return IsSignedIn;
+}
