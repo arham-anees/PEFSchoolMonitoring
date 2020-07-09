@@ -4,9 +4,14 @@ import { createAppContainer } from "react-navigation";
 import Login from "../Screens/Auth/Login";
 import SignUp from "../Screens/Auth/SignUp";
 import Loading from "../Screens/Loading";
-import Home from "../Screens/Monitor/Home";
+import MonitorHome from "../Screens/Monitor/MonitorHome";
+import AssignRoles from "../Screens/Admin/AssignRoles";
+import AdminHome from "../Screens/Admin/AdminHome";
 
 let screens = {
+  AssignRoles: {
+    screen: AssignRoles,
+  },
   Loading: {
     screen: Loading,
   },
@@ -16,8 +21,16 @@ let screens = {
   SignUp: {
     screen: SignUp,
   },
+  MonitorHome: {
+    screen: MonitorHome,
+  },
+  AdminHome: {
+    screen: AdminHome,
+  },
 };
-
+// screens.forEach(element => {
+//   //replace header here
+// });
 const stack = createStackNavigator(screens);
 
 export default createAppContainer(stack);

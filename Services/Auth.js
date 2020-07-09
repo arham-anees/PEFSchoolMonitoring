@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import CollectionNames from "./CollectionNames";
 
 export function LoginWithGoogle() {
   var provider = new firebase.auth.GoogleAuthProvider();
@@ -105,4 +106,115 @@ export function IsAuthenticated() {
     }
   });
   return IsSignedIn;
+}
+
+export function AssignRole(email, role) {
+  return new Promise((resolve, reject) => {
+    try {
+      let db = firebase.firestore();
+      db.collection(CollectionNames.UserRoles)
+        .doc(email)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            reject("User is already assigned role");
+          } else {
+            db.collection(CollectionNames.UserRoles)
+              .doc(email)
+              .set({
+                roleName: role,
+                email: email,
+                assignedBy: firebase.auth().currentUser.uid,
+                assignedOn: Date.now(),
+              })
+              .then(() => {
+                resolve("Role assigned");
+              })
+              .catch((err) => reject(err));
+          }
+        })
+        .catch((err) => reject(err));
+    } catch (err) {
+      console.log(err);
+      reject(err);
+    }
+  });
+}
+
+export function GetRole(email) {
+  return new Promise((resolve, reject) => {
+    firebase
+      .firestore()
+      .collection(CollectionNames.UserRoles)
+      .doc(email)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log(doc.data());
+          resolve(doc.data().roleName);
+        } else {
+          reject("Please wait for your role");
+        }
+      })
+      .catch((err) => reject(err));
+  });
+
+  // var citiesRef = firebase.firestore().collection("cities");
+
+  // citiesRef.doc("SF").set({
+  //   name: "San Francisco",
+  //   state: "CA",
+  //   country: "USA",
+  //   capital: false,
+  //   population: 860000,
+  //   regions: ["west_coast", "norcal"],
+  // });
+  // citiesRef.doc("LA").set({
+  //   name: "Los Angeles",
+  //   state: "CA",
+  //   country: "USA",
+  //   capital: false,
+  //   population: 3900000,
+  //   regions: ["west_coast", "socal"],
+  // });
+  // citiesRef.doc("DC").set({
+  //   name: "Washington, D.C.",
+  //   state: null,
+  //   country: "USA",
+  //   capital: true,
+  //   population: 680000,
+  //   regions: ["east_coast"],
+  // });
+  // citiesRef.doc("TOK").set({
+  //   name: "Tokyo",
+  //   state: null,
+  //   country: "Japan",
+  //   capital: true,
+  //   population: 9000000,
+  //   regions: ["kanto", "honshu"],
+  // });
+  // citiesRef.doc("BJ").set({
+  //   name: "Beijing",
+  //   state: null,
+  //   country: "China",
+  //   capital: true,
+  //   population: 21500000,
+  //   regions: ["jingjinji", "hebei"],
+  // });
+
+  // var docRef = firebase.firestore().collection("cities").doc("SF");
+
+  // docRef
+  //   .get()
+  //   .then(function (doc) {
+  //     if (doc.exists) {
+  //       console.log("Document data:", doc.data());
+  //     } else {
+  //       // doc.data() will be undefined in this case
+  //       console.log("No such document!");
+  //     }
+  //   })
+  //   .catch(function (error) {
+  //     console.log("Error getting document:", error);
+  //   }); //);
 }

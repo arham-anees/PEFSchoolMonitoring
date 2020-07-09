@@ -1,14 +1,14 @@
 import React from "react";
 import { Text } from "react-native";
 
-class Home extends React.Component {
+class MonitorHome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   render() {
-    return <Text>Home</Text>;
+    return <Text>MonitorHome</Text>;
   }
 }
 
-export default Home;
+export default MonitorHome;

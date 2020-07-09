@@ -1,6 +1,7 @@
 import React from "react";
 import { firebaseAuth } from "../Services/FirebaseConfig";
 import { View, Text } from "react-native";
+import { GetRole } from "../Services/Auth";
 
 class Loading extends React.Component {
   constructor(props) {
@@ -8,9 +9,20 @@ class Loading extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    let userRole;
     firebaseAuth.onAuthStateChanged((user) => {
       console.log("navigating", user);
-      this.props.navigation.navigate(user ? "Home" : "SignUp");
+      GetRole(user.email)
+        .then((role) => {
+          console.log(role);
+          userRole = role;
+          this.props.navigation.navigate(
+            role ? (role === "admin" ? "AdminHome" : "MonitorHome") : "Login"
+          );
+        })
+        .catch((err) => {
+          this.setState({ error: err });
+        });
     });
   }
   render() {
