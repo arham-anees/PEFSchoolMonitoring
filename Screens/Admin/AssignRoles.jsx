@@ -17,7 +17,10 @@ const list = [
   //... // more items
 ];
 
-function AssignRoles() {
+function AssignRoles(props) {
+  let handleClick = () => {
+    props.navigation.navigate("AssignRoleDetail");
+  };
   return (
     <View>
       {list.map((l, i) => (
@@ -26,6 +29,7 @@ function AssignRoles() {
           leftAvatar={{ source: { uri: l.avatar_url } }}
           title={l.name}
           subtitle={l.subtitle}
+          onPress={handleClick}
           bottomDivider
         />
       ))}
