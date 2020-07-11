@@ -9,7 +9,7 @@ import {
   ImageBackground,
   BackHandler,
 } from "react-native";
-import { SignInWithEmailAndPassword } from "../../Services/Auth";
+import { SignInWithEmailAndPassword, GetRole } from "../../Services/Auth";
 
 // const Google = () => {
 //   try {
@@ -38,9 +38,25 @@ import { SignInWithEmailAndPassword } from "../../Services/Auth";
 //   }
 // };
 
-const Email = (email, password) => {
+const Email = (email, password, props) => {
   try {
-    SignInWithEmailAndPassword(email, password);
+    SignInWithEmailAndPassword(email, password)
+      .then((res) => {
+        if (res !== null) {
+          GetRole(email)
+            .then((res) => {
+              props.navigation.navigate(
+                res === "null"
+                  ? "Profile"
+                  : res === "Admin"
+                  ? "AdminHome"
+                  : "MonitorHome"
+              );
+            })
+            .catch((err) => alert(err));
+        }
+      })
+      .catch((err) => console.error("Login failed", err));
   } catch (error) {
     console.error("Handled Error", error);
   }
@@ -98,7 +114,7 @@ export default function Login(props) {
 
         <TouchableOpacity
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => Email(email, password)}
+          onPress={() => Email(email, password, props)}
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>

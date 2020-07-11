@@ -76,15 +76,16 @@ export function CreateUserWithEmailAndPassword(email, password) {
   } else alert("invalid user email");
 }
 export function SignInWithEmailAndPassword(email, password) {
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((res) => console.log(res))
-    .catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.error("Error logging in", error);
-    });
+  return new Promise((resolve, reject) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((res) => resolve(res))
+      .catch(function (error) {
+        console.error("Error logging in", error);
+        reject(error);
+      });
+  });
 }
 
 export function SignOut() {
@@ -117,45 +118,12 @@ export function IsAuthenticated() {
   return IsSignedIn;
 }
 
-export function AssignRole(email, role) {
-  return new Promise((resolve, reject) => {
-    try {
-      let db = firebase.firestore();
-      db.collection(CollectionNames.UserRoles)
-        .doc(email)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            reject("User is already assigned role");
-          } else {
-            db.collection(CollectionNames.UserRoles)
-              .doc(email)
-              .set({
-                roleName: role,
-                email: email,
-                assignedBy: firebase.auth().currentUser.uid,
-                assignedOn: Date.now(),
-              })
-              .then(() => {
-                resolve("Role assigned");
-              })
-              .catch((err) => reject(err));
-          }
-        })
-        .catch((err) => reject(err));
-    } catch (err) {
-      console.log(err);
-      reject(err);
-    }
-  });
-}
-
 export function GetRole(email) {
   return new Promise((resolve, reject) => {
     try {
       firebase
         .firestore()
-        .collection(CollectionNames.UserRoles)
+        .collection(CollectionNames.Profile)
         .doc(email)
         .get()
         .then((doc) => {
@@ -168,6 +136,7 @@ export function GetRole(email) {
         })
         .catch((err) => reject(err));
     } catch (err) {
+      reject(err);
       console.error("Error", err);
     }
   });

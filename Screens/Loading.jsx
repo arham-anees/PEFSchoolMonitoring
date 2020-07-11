@@ -21,7 +21,7 @@ class Loading extends React.Component {
             .then((role) => {
               console.log(role);
               if (role == "null") {
-                this.props.navigation.navigate("Profile");
+                this.props.navigation.navigate("Profile", user.email);
               } else {
                 userRole = role;
                 this.props.navigation.navigate(

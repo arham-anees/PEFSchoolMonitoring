@@ -1,5 +1,6 @@
 const CollectionNames = {
-  UserRoles: "UserRoles",
+  //UserRoles: "UserRoles",
+  Profile: "Profile",
 };
 
 export default CollectionNames;
