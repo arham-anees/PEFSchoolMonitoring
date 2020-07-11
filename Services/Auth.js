@@ -1,61 +1,69 @@
 import * as firebase from "firebase";
+import "firebase/firestore";
 import CollectionNames from "./CollectionNames";
 
-export function LoginWithGoogle() {
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(function (result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      console.log(token);
-      console.log(user);
-      // ...
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-}
+// export function LoginWithGoogle() {
+//   var provider = new firebase.auth.GoogleAuthProvider();
+//   firebase
+//     .auth()
+//     .signInWithPopup(provider)
+//     .then(function (result) {
+//       // This gives you a Google Access Token. You can use it to access the Google API.
+//       var token = result.credential.accessToken;
+//       // The signed-in user info.
+//       var user = result.user;
+//       console.log(token);
+//       console.log(user);
+//       // ...
+//     })
+//     .catch(function (error) {
+//       // Handle Errors here.
+//       var errorCode = error.code;
+//       var errorMessage = error.message;
+//       // The email of the user's account used.
+//       var email = error.email;
+//       // The firebase.auth.AuthCredential type that was used.
+//       var credential = error.credential;
+//       console.log(error);
+//       reject(error);
+//     });
+// }
 
-export function LoginWithFacebook() {
-  var provider = new firebase.auth.FacebookAuthProvider();
-  firebase
-    .auth()
-    .signInWithRedirect(provider)
-    .then(function (result) {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      console.log(token);
-      console.log(user);
-      // ...
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-}
+// export function LoginWithFacebook() {
+//   return new Promise((resolve, reject) => {
+//     var provider = new firebase.auth.FacebookAuthProvider();
+//     firebase
+//       .auth()
+//       .signInWithRedirect(provider)
+//       .then(function (result) {
+//         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+//         var token = result.credential.accessToken;
+//         // The signed-in user info.
+//         var user = result.user;
+//         console.log(token);
+//         console.log(user);
+//         resolve(user);
+//         // ...
+//       })
+//       .catch(function (error) {
+//         // Handle Errors here.
+//         var errorCode = error.code;
+//         var errorMessage = error.message;
+//         // The email of the user's account used.
+//         var email = error.email;
+//         // The firebase.auth.AuthCredential type that was used.
+//         var credential = error.credential;
+//         // ...
+//         console.log(error);
+//         reject(error);
+//       });
+//   });
+// }
 
 export function CreateUserWithEmailAndPassword(email, password) {
+  alert("creating your account");
   if (email !== undefined || email !== "") {
-    if (email !== undefined || email !== "") {
+    if (password !== undefined || password !== "") {
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
@@ -64,17 +72,18 @@ export function CreateUserWithEmailAndPassword(email, password) {
           var errorCode = error.code;
           var errorMessage = error.message;
         });
-    }
-  }
+    } else alert("invalid user password");
+  } else alert("invalid user email");
 }
 export function SignInWithEmailAndPassword(email, password) {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
+    .then((res) => console.log(res))
     .catch(function (error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
+      console.error("Error logging in", error);
     });
 }
 
@@ -143,20 +152,24 @@ export function AssignRole(email, role) {
 
 export function GetRole(email) {
   return new Promise((resolve, reject) => {
-    firebase
-      .firestore()
-      .collection(CollectionNames.UserRoles)
-      .doc(email)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          console.log(doc.data());
-          resolve(doc.data().roleName);
-        } else {
-          reject("Please wait for your role");
-        }
-      })
-      .catch((err) => reject(err));
+    try {
+      firebase
+        .firestore()
+        .collection(CollectionNames.UserRoles)
+        .doc(email)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            console.log(doc.data());
+            resolve(doc.data().roleName);
+          } else {
+            resolve("null");
+          }
+        })
+        .catch((err) => reject(err));
+    } catch (err) {
+      console.error("Error", err);
+    }
   });
 
   // var citiesRef = firebase.firestore().collection("cities");

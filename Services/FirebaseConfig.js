@@ -11,6 +11,10 @@ const firebaseConfig = {
   appId: "1:1012321083324:web:9c18dbe078c66ef93195b9",
 };
 
-let firebaseApp = firebase.initializeApp(firebaseConfig);
-//}
+try {
+  var firebaseApp = firebase.initializeApp(firebaseConfig);
+} catch (err) {
+  console.log("Error in initializing firebase app");
+  alert("Error in initializing firebase app");
+}
 export const firebaseAuth = firebaseApp.auth();

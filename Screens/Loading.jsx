@@ -1,29 +1,46 @@
 import React from "react";
 import { firebaseAuth } from "../Services/FirebaseConfig";
-import { View, Text } from "react-native";
+import { View, Text, BackHandler } from "react-native";
 import { GetRole } from "../Services/Auth";
 
+// https://expo.io/dashboard/arham-anees/builds/8d325784-b993-4269-865f-fd579b369a8f
+// https://expo.io/artifacts/77fe230e-b5df-4523-8e9e-93b66cc48d9c
 class Loading extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", () =>
+      BackHandler.exitApp()
+    );
+
     let userRole;
-    firebaseAuth.onAuthStateChanged((user) => {
-      console.log("navigating", user);
-      GetRole(user.email)
-        .then((role) => {
-          console.log(role);
-          userRole = role;
-          this.props.navigation.navigate(
-            role ? (role === "admin" ? "AdminHome" : "MonitorHome") : "Login"
-          );
-        })
-        .catch((err) => {
-          this.setState({ error: err });
-        });
-    });
+    try {
+      firebaseAuth.onAuthStateChanged((user) => {
+        //console.log("navigating", user);
+        if (user === null) this.props.navigation.navigate("Login");
+        else {
+          GetRole(user.email)
+            .then((role) => {
+              console.log(role);
+              if (role == "null") {
+                this.props.navigation.navigate("Profile");
+              } else {
+                userRole = role;
+                this.props.navigation.navigate(
+                  role
+                    ? role === "Admin"
+                      ? "AdminHome"
+                      : "MonitorHome"
+                    : "Login"
+                );
+              }
+            })
+            .catch((err) => {
+              console.error("Error getting role", err);
+            });
+        }
+      });
+    } catch (err) {
+      console.log("Error found");
+    }
   }
   render() {
     return (

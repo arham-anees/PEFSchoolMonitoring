@@ -5,11 +5,11 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Alert,
-  ScrollView,
   FlatList,
+  BackHandler,
 } from "react-native";
 
+BackHandler.addEventListener("hardwareBackPress", () => BackHandler.exitApp());
 function AdminHome() {
   let data = [
     {

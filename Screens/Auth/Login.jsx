@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,29 +7,58 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  BackHandler,
 } from "react-native";
-import {
-  LoginWithGoogle,
-  LoginWithFacebook,
-  onAuthStateChange,
-} from "../../Services/Auth";
-import * as firebase from "firebase";
+import { SignInWithEmailAndPassword } from "../../Services/Auth";
 
-const onClickListener = (viewId) => {
-  alert(viewId);
+// const Google = () => {
+//   try {
+//     // ToastAndroid.showWithGravity(
+//     //   "Please wait while we log you in",
+//     //   ToastAndroid.LONG,
+//     //   ToastAndroid.BOTTOM
+//     // );
+//     LoginWithGoogle();
+//     // .then((res) => {
+//     //   console.log(res);
+//     // })
+//     // .catch((err) => console.log(err));
+//   } catch (err) {
+//     console.error("Handled Error", err);
+//   }
+// };
+
+// const Facebook = () => {
+//   try {
+//     LoginWithFacebook()
+//       .then((res) => console.log(res))
+//       .catch((err) => console.error("handled Error", err));
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+const Email = (email, password) => {
+  try {
+    SignInWithEmailAndPassword(email, password);
+  } catch (error) {
+    console.error("Handled Error", error);
+  }
 };
 
+BackHandler.addEventListener("hardwareBackPress", () => BackHandler.exitApp());
+
 export default function Login(props) {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      props.navigation.navigate("SignUp");
-    }
-  });
+  let [email, setEmail] = useState();
+  let [password, setPassword] = useState();
   return (
     <View style={styles.container}>
       <ImageBackground
         style={styles.bgImage}
-        source={{ uri: "https://lorempixel.com/900/1400/nightlife/2/" }}
+        source={{
+          uri:
+            "https://coloredbrain.com/wp-content/uploads/2016/07/login-background.jpg",
+        }}
       >
         <View style={styles.inputContainer}>
           <TextInput
@@ -37,7 +66,8 @@ export default function Login(props) {
             placeholder="Email"
             keyboardType="email-address"
             underlineColorAndroid="transparent"
-            onChangeText={(email) => this.setState({ email })}
+            value={email}
+            onChangeText={(value) => setEmail(value)}
           />
           <ImageBackground
             style={styles.inputIcon}
@@ -53,7 +83,8 @@ export default function Login(props) {
             placeholder="Password"
             secureTextEntry={true}
             underlineColorAndroid="transparent"
-            onChangeText={(password) => this.setState({ password })}
+            value={password}
+            onChangeText={(value) => setPassword(value)}
           />
           <Image
             style={styles.inputIcon}
@@ -61,26 +92,26 @@ export default function Login(props) {
           />
         </View>
 
-        <TouchableOpacity
-          style={styles.btnForgotPassword}
-          onPress={() => onClickListener("restore_password")}
-        >
+        <TouchableOpacity style={styles.btnForgotPassword}>
           <Text style={styles.btnText}>Forgot your password?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => onClickListener("login")}
+          onPress={() => Email(email, password)}
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={[styles.buttonContainer, styles.loginWithGoogle]}
+          onPress={Google}
         >
           <View style={styles.loginButtonLogoWrapper}>
             <Image
               style={styles.loginButtonLogo}
-              source="https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/2659939281579738432-512.png"
+              source={{
+                uri: "https://i.dlpng.com/static/png/6330185_preview.png",
+              }}
             />
           </View>
           <Text style={styles.loginText}>Login With Google</Text>
@@ -92,20 +123,23 @@ export default function Login(props) {
             styles.loginWithGoogle,
             { backgroundColor: "#3b5998" },
           ]}
-          onPress={LoginWithFacebook}
+          onPress={Facebook}
         >
           <View style={styles.loginButtonLogoWrapper}>
             <Image
               style={[styles.loginButtonLogo, {}]}
-              source="https://www.freeiconspng.com/uploads/facebook-f-logo-white-background-21.jpg"
+              source={{
+                uri:
+                  "https://www.freeiconspng.com/uploads/facebook-f-logo-white-background-21.jpg",
+              }}
             />
           </View>
-          <Text style={styles.loginText}>Login With Google</Text>
-        </TouchableOpacity>
+          <Text style={styles.loginText}>Login With Facebook</Text>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => LoginWithGoogsle()}
+          onPress={() => props.navigation.navigate("SignUp")}
         >
           <Text style={styles.btnText}>Register</Text>
         </TouchableOpacity>

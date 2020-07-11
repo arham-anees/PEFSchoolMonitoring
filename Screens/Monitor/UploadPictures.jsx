@@ -1,61 +1,92 @@
-import React from "react";
-import { Text } from "react-native";
-import ImagePicker from "react-native-image-picker";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { Button, Image } from "react-native-elements";
+
+function _pickImage(images, setImages) {
+  try {
+    let result = ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+      allowsMultipleSelection: true,
+    });
+    result.then((res) => {
+      console.log(res);
+      if (!res.cancelled) setImages([...images, res.uri]);
+    });
+
+    //console.log(result);
+  } catch (E) {
+    console.log(E);
+  }
+}
+
+function handleUpload(images) {
+  console.log(images);
+}
 
 function UploadPictures(props) {
-  return <Text onPress={() => chooseImage()}>Upload picture</Text>;
+  let [images, setImages] = useState([]);
+  let jsx = <View></View>;
+  if (images.length > 0) {
+    // images.forEach((image) => {
+    //   jsx += (
+    //     <Image
+    //       source={{ uri: image }}
+    //       style={{ width: 200, height: 200 }}
+    //       PlaceholderContent={<ActivityIndicator />}
+    //     />
+    //   );
+    //   debugger;
+    // });
+  } else {
+    jsx = <Text>No image selected</Text>;
+  }
+  return (
+    <View style={Styles.container}>
+      <View style={Styles.listContainer}>
+        {images.length === 0 ? (
+          <Text>No Image Selected</Text>
+        ) : (
+          images.map((img, i) => (
+            <Image
+              key={i}
+              source={{ uri: img }}
+              style={{ width: 100, height: 100, margin: 5 }}
+            />
+          ))
+        )}
+      </View>
+      {images.length > 0 ? (
+        <Button
+          onPress={() => handleUpload(images)}
+          title={"Upload"}
+          type={"solid"}
+          containerStyle={{ marginBottom: 5 }}
+        />
+      ) : null}
+      <Button
+        onPress={() => _pickImage(images, setImages)}
+        title={"Select Image"}
+        type={"outline"}
+        raised
+      />
+    </View>
+  );
 }
 
 export default UploadPictures;
-let options = {
-  title: "Select Image",
-  customButtons: [
-    { name: "customOptionKey", title: "Choose Photo from Custom Option" },
-  ],
-  storageOptions: {
-    skipBackup: true,
-    path: "images",
+
+const Styles = StyleSheet.create({
+  container: {
+    margin: 10,
   },
-};
-
-/**
- * The first arg is the options object for customization (it can also be null or omitted for default options),
- * The second arg is the callback which sends object: response (more info in the API Reference)
- */
-
-chooseImage = () => {
-  let options = {
-    title: "Select Image",
-    customButtons: [
-      { name: "customOptionKey", title: "Choose Photo from Custom Option" },
-    ],
-    storageOptions: {
-      skipBackup: true,
-      path: "images",
-    },
-  };
-  ImagePicker.showImagePicker(options, (response) => {
-    console.log("Response = ", response);
-
-    if (response.didCancel) {
-      console.log("User cancelled image picker");
-    } else if (response.error) {
-      console.log("ImagePicker Error: ", response.error);
-    } else if (response.customButton) {
-      console.log("User tapped custom button: ", response.customButton);
-      alert(response.customButton);
-    } else {
-      const source = { uri: response.uri };
-
-      // You can also display the image using data:
-      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-      // alert(JSON.stringify(response));s
-      console.log("response", JSON.stringify(response));
-      this.setState({
-        filePath: response,
-        fileData: response.data,
-        fileUri: response.uri,
-      });
-    }
-  });
-};
+  listContainer: {
+    marginBottom: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+  },
+});
