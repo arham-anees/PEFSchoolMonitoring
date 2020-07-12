@@ -52,7 +52,7 @@ function Navigator() {
           <Stack.Screen
             name="Profile"
             component={Profile}
-            options={{ headerLeft: () => null }}
+            options={withLogOut}
           />
           <Stack.Screen
             name="MonitorHome"

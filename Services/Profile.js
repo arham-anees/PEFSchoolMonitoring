@@ -15,6 +15,9 @@ export function SetOrUpdateProfile(profile) {
             .update({
               ...profile,
               lastModifiedOn: Date.now(),
+              isApproved: false,
+              approvedOn: null,
+              approvedBy: null,
             })
             .then(() => {
               resolve("Role assigned");

@@ -11,10 +11,6 @@ import { CreateUserWithEmailAndPassword } from "../../Services/Auth";
 import { Button } from "react-native-elements";
 import styles from "./Style";
 
-const onClickListener = (viewId) => {
-  alert(viewId);
-};
-
 export default function SignUp(props) {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");

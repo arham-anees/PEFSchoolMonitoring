@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { StyleSheet, Picker } from "react-native";
 import { firebaseAuth } from "../../Services/FirebaseConfig";
@@ -14,7 +14,7 @@ let handleClick = (name, email, phone, serviceNumber, role) => {
       email,
       phone,
       serviceNumber,
-      role,
+      roleName: role,
     })
       .then((response) => {
         console.log("response of creating another user", response);
@@ -32,28 +32,30 @@ let handleClick = (name, email, phone, serviceNumber, role) => {
 function Profile(props) {
   let email = props.route.params;
   let [disable, setDisable] = useState(false);
-  let [role, setRole] = useState();
-  let [name, setName] = useState();
-  let [phone, setPhone] = useState();
+  let [role, setRole] = useState("");
+  let [name, setName] = useState("");
+  let [phone, setPhone] = useState("");
   let [serviceNumber, setServiceNumber] = useState();
   console.log(email);
-  firebaseAuth.onAuthStateChanged((user) => {
-    if (user !== null) {
-      GetProfile(email)
-        .then((_profile) => {
-          console.log(_profile);
-          setName(_profile.name);
-          setRole(_profile.roleName);
-          setPhone(_profile.phone);
-          setServiceNumber(_profile.serviceNumber);
-        })
-        .catch((err) => {
-          if (err != "null") console.error(err);
-        });
-    } else {
-      props.navigation.navigate("Login");
-    }
-  });
+  useEffect(() => {
+    firebaseAuth.onAuthStateChanged((user) => {
+      if (user !== null) {
+        GetProfile(email)
+          .then((_profile) => {
+            console.log(_profile);
+            setName(_profile.name);
+            setRole(_profile.roleName);
+            setPhone(_profile.phone);
+            setServiceNumber(_profile.serviceNumber);
+          })
+          .catch((err) => {
+            if (err != "null") console.error(err);
+          });
+      } else {
+        props.navigation.navigate("Login");
+      }
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <Input

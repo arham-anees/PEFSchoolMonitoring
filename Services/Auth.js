@@ -128,8 +128,7 @@ export function GetRole(email) {
         .get()
         .then((doc) => {
           if (doc.exists) {
-            console.log(doc.data());
-            resolve(doc.data().roleName);
+            resolve(doc.data().isApproved ? doc.data().roleName : "null");
           } else {
             resolve("null");
           }
