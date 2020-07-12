@@ -121,12 +121,15 @@ export function IsAuthenticated() {
 export function GetRole(email) {
   return new Promise((resolve, reject) => {
     try {
+      if (email === undefined || email === null || email == "") reject("null");
+      console.log("point 1", email);
       firebase
         .firestore()
         .collection(CollectionNames.Profile)
         .doc(email)
         .get()
         .then((doc) => {
+          console.log("point 2", doc.data());
           if (doc.exists) {
             resolve(doc.data().isApproved ? doc.data().roleName : "null");
           } else {
@@ -136,7 +139,7 @@ export function GetRole(email) {
         .catch((err) => reject(err));
     } catch (err) {
       reject(err);
-      console.error("Error", err);
+      console.log("Error", err);
     }
   });
 

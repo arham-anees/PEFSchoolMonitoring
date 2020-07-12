@@ -1,46 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View } from "react-native";
 import { ListItem } from "react-native-elements";
-import School from "./School";
+import { getAllSchools } from "../../Services/Schools";
 
-const Schools = [
-  {
-    name: "school 1",
-    date: Date.now(),
-  },
-  {
-    name: "school 2",
-    date: Date.now(),
-  },
-  {
-    name: "school 3",
-    date: Date.now(),
-  },
-  {
-    name: "school 4",
-    date: Date.now(),
-  },
-  {
-    name: "school 5",
-    date: Date.now(),
-  },
-];
-
-function SchoolsList(props) {
-  return (
-    <View>
-      {Schools.map((item, i) => (
-        <ListItem
-          key={i}
-          title={item.name}
-          subtitle={Date(item.date).toString().substr(0, 24)}
-          bottomDivider
-          chevron
-          onPress={() => props.navigation.navigate("School", item)}
-        />
-      ))}
-    </View>
-  );
+class SchoolsList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { schools: [] };
+  }
+  componentDidMount() {
+    getAllSchools()
+      .then((res) => {
+        console.log(res);
+        this.setState({ schools: res });
+      })
+      .catch((err) => console.error("failed to get schools", err));
+  }
+  render() {
+    return (
+      <View>
+        {this.state.schools === undefined ||
+        this.state.schools === null ||
+        this.state.schools.length === 0 ? (
+          <Text>No school record is found</Text>
+        ) : (
+          this.state.schools.map((item, i) => (
+            <ListItem
+              key={i}
+              title={item.name}
+              subtitle={Date(item.lastModifiedOn).toString().substr(0, 24)}
+              bottomDivider
+              chevron
+              onPress={() => this.props.navigation.navigate("School", item)}
+            />
+          ))
+        )}
+      </View>
+    );
+  }
 }
 
 export default SchoolsList;

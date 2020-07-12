@@ -19,6 +19,8 @@ import SchoolsList from "../Screens/Shared/SchoolsList";
 import Profile from "../Screens/Shared/Profile";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import ClassesList from "../Screens/Shared/ClassesList";
+import Class from "../Screens/Shared/Class";
 
 const Stack = createStackNavigator();
 
@@ -67,6 +69,8 @@ function Navigator() {
           <Stack.Screen name="Reports" component={Reports} />
           <Stack.Screen name="ReportDetail" component={ReportDetail} />
           <Stack.Screen name="UploadPictures" component={UploadPictures} />
+          <Stack.Screen name="ClassesList" component={ClassesList} />
+          <Stack.Screen name="Class" component={Class} />
         </Stack.Navigator>
       </NavigationContainer>
     );

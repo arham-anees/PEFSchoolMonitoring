@@ -43,8 +43,10 @@ const Email = (email, password, props) => {
     SignInWithEmailAndPassword(email, password)
       .then((res) => {
         if (res !== null) {
+          console.log("point 4", email);
           GetRole(email)
             .then((res) => {
+              console.log("point 5", res);
               props.navigation.navigate(
                 res === "null"
                   ? "Profile"
@@ -56,9 +58,9 @@ const Email = (email, password, props) => {
             .catch((err) => alert(err));
         }
       })
-      .catch((err) => console.error("Login failed", err));
+      .catch((err) => console.log("Login failed", err));
   } catch (error) {
-    console.error("Handled Error", error);
+    console.log("Handled Error", error);
   }
 };
 
