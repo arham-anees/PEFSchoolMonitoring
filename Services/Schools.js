@@ -12,10 +12,30 @@ export function setSchool(school) {
         .then((response) => {
           console.log(response);
           debugger;
+          resolve(res);
         })
         .catch((err) => reject(err));
     } catch (err) {
       reject(err);
+    }
+  });
+}
+
+export function updateSchool(school) {
+  return new Promise((resolve, reject) => {
+    try {
+      let db = firebase
+        .firestore()
+        .collection(CollectionNames.Schools)
+        .doc("school" + school.id)
+        .update(school)
+        .then((res) => {
+          debugger;
+          resolve(res);
+        })
+        .catch((err) => reject(err));
+    } catch (error) {
+      reject(error);
     }
   });
 }

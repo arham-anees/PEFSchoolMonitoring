@@ -19,8 +19,12 @@ import SchoolsList from "../Screens/Shared/SchoolsList";
 import Profile from "../Screens/Shared/Profile";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import ClassesList from "../Screens/Shared/ClassesList";
-import Class from "../Screens/Shared/Class";
+import ClassesList from "../Screens/Shared/Class/ClassesList";
+import Class from "../Screens/Shared/Class/Class";
+import NewClass from "../Screens/Shared/Class/NewClass";
+import TeachersList from "../Screens/Shared/Teacher/TeachersList";
+import Teacher from "../Screens/Shared/Teacher/Teacher";
+import NewTeacher from "../Screens/Shared/Teacher/NewTeacher";
 
 const Stack = createStackNavigator();
 
@@ -71,6 +75,10 @@ function Navigator() {
           <Stack.Screen name="UploadPictures" component={UploadPictures} />
           <Stack.Screen name="ClassesList" component={ClassesList} />
           <Stack.Screen name="Class" component={Class} />
+          <Stack.Screen name="NewClass" component={NewClass} />
+          <Stack.Screen name="TeachersList" component={TeachersList} />
+          <Stack.Screen name="Teacher" component={Teacher} />
+          <Stack.Screen name="NewTeacher" component={NewTeacher} />
         </Stack.Navigator>
       </NavigationContainer>
     );

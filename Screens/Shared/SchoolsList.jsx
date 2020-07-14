@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import { ListItem } from "react-native-elements";
 import { getAllSchools } from "../../Services/Schools";
 
 class SchoolsList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { schools: [] };
+    this.state = { schools: null };
   }
   componentDidMount() {
     getAllSchools()
@@ -19,9 +19,9 @@ class SchoolsList extends React.Component {
   render() {
     return (
       <View>
-        {this.state.schools === undefined ||
-        this.state.schools === null ||
-        this.state.schools.length === 0 ? (
+        {this.state.schools === undefined || this.state.schools === null ? (
+          <ActivityIndicator style={{ marginTop: 30 }} />
+        ) : this.state.schools.length === 0 ? (
           <Text>No school record is found</Text>
         ) : (
           this.state.schools.map((item, i) => (
@@ -31,7 +31,12 @@ class SchoolsList extends React.Component {
               subtitle={Date(item.lastModifiedOn).toString().substr(0, 24)}
               bottomDivider
               chevron
-              onPress={() => this.props.navigation.navigate("School", item)}
+              onPress={() =>
+                this.props.navigation.navigate("School", {
+                  school: item,
+                  editable: true,
+                })
+              }
             />
           ))
         )}
