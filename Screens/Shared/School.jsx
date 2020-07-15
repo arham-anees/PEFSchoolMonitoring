@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
 import { CheckBox, Button } from "react-native-elements";
 import { updateSchool } from "../../Services/Schools";
-import { app } from "firebase";
+import firebase, { auth } from "firebase";
 
 class School extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       school: this.props.route.params.school,
-      editable: this.props.route.params.editable,
+      editable: false,
       lastOperation: Date.now(), //this is to prevent double call
     };
   }
@@ -70,47 +70,67 @@ class School extends React.Component {
   };
 
   toggleIsOvercrowded = () => {
-    this.state.school.isOvercrowded = !this.state.school.isOvercrowded;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.isOvercrowded = !this.state.school.isOvercrowded;
+      this.setState(this.state.school);
+    }
   };
   toggleIsCongested = () => {
-    this.state.school.isCongested = !this.state.school.isCongested;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.isCongested = !this.state.school.isCongested;
+      this.setState(this.state.school);
+    }
   };
   toggleIsLightArtificial = () => {
-    this.state.school.isLightArtificial = !this.state.school.isLightArtificial;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.isLightArtificial = !this.state.school
+        .isLightArtificial;
+      this.setState(this.state.school);
+    }
   };
   toggleIsPlasteringRequired = () => {
-    this.state.school.isPlasteringRequired = !this.state.school
-      .isPlasteringRequired;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.isPlasteringRequired = !this.state.school
+        .isPlasteringRequired;
+      this.setState(this.state.school);
+    }
   };
 
   toggleIsRoomsConditionProper = () => {
-    this.state.school.isRoomsConditionProper = !this.state.school
-      .isRoomsConditionProper;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.isRoomsConditionProper = !this.state.school
+        .isRoomsConditionProper;
+      this.setState(this.state.school);
+    }
   };
   toggleIsStudentCharged = () => {
-    this.state.school.isStudentCharged = !this.state.school.isStudentCharged;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.isStudentCharged = !this.state.school.isStudentCharged;
+      this.setState(this.state.school);
+    }
   };
 
   toggleIsFurnitureProper = () => {
-    this.state.school.isFurnitureProper = !this.state.school.isFurnitureProper;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.isFurnitureProper = !this.state.school
+        .isFurnitureProper;
+      this.setState(this.state.school);
+    }
   };
 
   toggleAreTeachersPaid = () => {
-    this.state.school.areTeachersPaid = !this.state.school.areTeachersPaid;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.areTeachersPaid = !this.state.school.areTeachersPaid;
+      this.setState(this.state.school);
+    }
   };
 
   toggleAreRoomsVentilated = () => {
-    this.state.school.areRoomsVentilated = !this.state.school
-      .areRoomsVentilated;
-    this.setState(this.state.school);
+    if (this.state.editable) {
+      this.state.school.areRoomsVentilated = !this.state.school
+        .areRoomsVentilated;
+      this.setState(this.state.school);
+    }
   };
 
   render() {
@@ -185,6 +205,7 @@ class School extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
+            editable={this.state.editable}
             value={this.state.school.noOfWritingBoards.toString()}
             onChangeText={(text) => {
               this.state.school.noOfWritingBoards = parseInt(text);
@@ -197,6 +218,7 @@ class School extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
+            editable={this.state.editable}
             value={this.state.school.noOfProperFans.toString()}
             onChangeText={(text) => {
               this.state.school.noOfProperFans = parseInt(text);
@@ -209,6 +231,7 @@ class School extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
+            editable={this.state.editable}
             value={this.state.school.noOfTeacherChairs.toString()}
             onChangeText={(text) => {
               this.state.school.noOfTeacherChairs = parseInt(text);
@@ -240,16 +263,18 @@ class School extends React.Component {
           }
           style={{ marginTop: 10 }}
         />
-        <Button
-          title={this.state.editable ? "Submit Report" : "Start Monitoring"}
-          type={"solid"}
-          onPress={() =>
-            this.state.editable
-              ? this.handleClick(this.state.school)
-              : this.setState({ editable: true })
-          }
-          style={{ marginTop: 10 }}
-        />
+        {firebase.auth().currentUser.roleName === "Monitor" ? (
+          <Button
+            title={this.state.editable ? "Submit Report" : "Start Monitoring"}
+            type={"solid"}
+            onPress={() =>
+              this.state.editable
+                ? this.handleClick(this.state.school)
+                : this.setState({ editable: !this.state.editable })
+            }
+            style={{ marginTop: 10 }}
+          />
+        ) : null}
       </View>
     );
   }

@@ -6,7 +6,7 @@ import { getAllSchools } from "../../Services/Schools";
 class SchoolsList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { schools: null };
+    this.state = { schools: null, editable: false };
   }
   componentDidMount() {
     getAllSchools()
@@ -34,7 +34,6 @@ class SchoolsList extends React.Component {
               onPress={() =>
                 this.props.navigation.navigate("School", {
                   school: item,
-                  editable: true,
                 })
               }
             />

@@ -102,3 +102,26 @@ export function SetApproval(profile) {
     }
   });
 }
+
+export function GetProfiles() {
+  return new Promise((resolve, reject) => {
+    try {
+      firebase
+        .firestore()
+        .collection(CollectionNames.Profile)
+        .get()
+        .then((res) => {
+          let profiles = [];
+          if (res.docs.length > 0) {
+            res.docs.forEach((x) => {
+              x.data().isApproved ? null : profiles.push(x.data());
+            });
+          }
+          resolve(profiles);
+        })
+        .catch((err) => reject(err));
+    } catch (err) {
+      reject(err);
+    }
+  });
+}

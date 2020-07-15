@@ -7,28 +7,32 @@ import {
   Image,
   FlatList,
   BackHandler,
+  ImagePropTypes,
 } from "react-native";
 
 BackHandler.addEventListener("hardwareBackPress", () => BackHandler.exitApp());
-function AdminHome() {
+function AdminHome(props) {
   let data = [
     {
       id: 1,
       title: "Approve Users",
       color: "#FF4500",
       image: "https://img.icons8.com/dusk/64/000000/user-male.png",
+      page: "AssignRoles",
     },
     {
       id: 2,
       title: "View  Reports",
       color: "#87CEEB",
       image: "https://img.icons8.com/plasticine/100/000000/business-report.png",
+      page: "",
     },
     {
       id: 3,
       title: "Schools",
       color: "#4682B4",
       image: "https://img.icons8.com/office/70/000000/home-page.png",
+      page: "SchoolsList",
     },
   ];
 
@@ -53,7 +57,7 @@ function AdminHome() {
               <TouchableOpacity
                 style={[styles.card, { backgroundColor: item.color }]}
                 onPress={() => {
-                  clickEventListener("item");
+                  props.navigation.navigate(item.page);
                 }}
               >
                 <Image style={styles.cardImage} source={{ uri: item.image }} />

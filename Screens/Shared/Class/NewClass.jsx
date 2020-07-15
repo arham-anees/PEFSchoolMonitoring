@@ -28,6 +28,29 @@ class NewClass extends React.Component {
     };
   }
 
+  addClass = () => {
+    let s = this.state;
+    if (parseInt(s.grade) > 0 && parseInt(s.grade) <= 10) {
+      if (
+        parseInt(s.totalEnrollment) ===
+        parseInt(s.activeStudents) +
+          parseInt(s.nonPefStudents) +
+          parseInt(s.unregisteredStudents) +
+          parseInt(s.dropoutStudents)
+      ) {
+        this.props.route.params.addClass(this.state.class)
+          ? this.props.navigation.pop()
+          : alert("Failed to add class");
+      } else {
+        alert(
+          "Please consider the figures again. total enrolment does not match number of students"
+        );
+      }
+    } else {
+      alert("Please insert Valid grade");
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -181,11 +204,7 @@ class NewClass extends React.Component {
           title={"Submit"}
           type={"outline"}
           containerStyle={styles.button}
-          onPress={() => {
-            this.props.route.params.addClass(this.state.class)
-              ? this.props.navigation.pop(2)
-              : alert("Failed to add class");
-          }}
+          onPress={this.addClass}
         />
       </View>
     );
