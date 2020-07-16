@@ -3,6 +3,7 @@ import { firebaseAuth } from "../Services/FirebaseConfig";
 import { View, Text, BackHandler } from "react-native";
 import { GetRole } from "../Services/Auth";
 import { app } from "firebase";
+import eApprovalStatus from "../Helper/eApprovalStatus";
 
 // https://expo.io/dashboard/arham-anees/builds/8d325784-b993-4269-865f-fd579b369a8f
 // https://expo.io/artifacts/77fe230e-b5df-4523-8e9e-93b66cc48d9c
@@ -21,8 +22,11 @@ class Loading extends React.Component {
           GetRole(user.email)
             .then((role) => {
               console.log(role);
-              if (role == "null") {
+              if (role == "null")
                 this.props.navigation.navigate("Profile", user.email);
+              else if (role === eApprovalStatus.Rejected) {
+                alert("Your profile has been rejected. you cannot login.");
+                app.exitApp();
               } else {
                 userRole = role;
                 this.props.navigation.navigate(

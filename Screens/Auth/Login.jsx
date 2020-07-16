@@ -58,7 +58,10 @@ const Email = (email, password, props) => {
             .catch((err) => alert(err));
         }
       })
-      .catch((err) => console.log("Login failed", err));
+      .catch((err) => {
+        console.log("Login failed", err);
+        alert(err.message);
+      });
   } catch (error) {
     console.log("Handled Error", error);
   }

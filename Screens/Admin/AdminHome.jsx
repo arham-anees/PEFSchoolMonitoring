@@ -25,7 +25,7 @@ function AdminHome(props) {
       title: "View  Reports",
       color: "#87CEEB",
       image: "https://img.icons8.com/plasticine/100/000000/business-report.png",
-      page: "",
+      page: "ReportsList",
     },
     {
       id: 3,
@@ -57,7 +57,7 @@ function AdminHome(props) {
               <TouchableOpacity
                 style={[styles.card, { backgroundColor: item.color }]}
                 onPress={() => {
-                  props.navigation.navigate(item.page);
+                  props.navigation.navigate(item.page, { isMonitor: false });
                 }}
               >
                 <Image style={styles.cardImage} source={{ uri: item.image }} />

@@ -10,6 +10,7 @@ class School extends React.Component {
     this.state = {
       school: this.props.route.params.school,
       editable: false,
+      isMonitor: this.props.route.params.isMonitor,
       lastOperation: Date.now(), //this is to prevent double call
     };
   }
@@ -61,10 +62,12 @@ class School extends React.Component {
       updateSchool(school)
         .then((res) => {
           alert("Report submitted successfully");
+          this.setState({ editable: !this.state.editable });
         })
-        .catch((err) =>
-          alert("Failed to submit report. please try again later")
-        );
+        .catch((err) => {
+          console.log(err);
+          alert("Failed to submit report. please try again later");
+        });
       console.log(school);
     }
   };
@@ -239,42 +242,44 @@ class School extends React.Component {
             }}
           />
         </View>
-        <Button
-          title={"Classes"}
-          type={"outline"}
-          onPress={() =>
-            this.props.navigation.navigate("ClassesList", {
-              classes: this.state.school.classes,
-              editable: this.state.editable,
-              updateClass: this.updateClass,
-              addClass: this.addClass,
-            })
-          }
-        />
-        <Button
-          title={"Teachers"}
-          type={"outline"}
-          onPress={() =>
-            this.props.navigation.navigate("TeachersList", {
-              teachers: this.state.school.teachers,
-              updateTeacher: this.updateTeacher,
-              editable: this.state.editable,
-            })
-          }
-          style={{ marginTop: 10 }}
-        />
-        {firebase.auth().currentUser.roleName === "Monitor" ? (
+        <View style={{ paddingHorizontal: 20 }}>
           <Button
-            title={this.state.editable ? "Submit Report" : "Start Monitoring"}
-            type={"solid"}
+            title={"Classes"}
+            type={"outline"}
             onPress={() =>
-              this.state.editable
-                ? this.handleClick(this.state.school)
-                : this.setState({ editable: !this.state.editable })
+              this.props.navigation.navigate("ClassesList", {
+                classes: this.state.school.classes,
+                editable: this.state.editable,
+                updateClass: this.updateClass,
+                addClass: this.addClass,
+              })
+            }
+          />
+          <Button
+            title={"Teachers"}
+            type={"outline"}
+            onPress={() =>
+              this.props.navigation.navigate("TeachersList", {
+                teachers: this.state.school.teachers,
+                updateTeacher: this.updateTeacher,
+                editable: this.state.editable,
+              })
             }
             style={{ marginTop: 10 }}
           />
-        ) : null}
+          {this.state.isMonitor ? (
+            <Button
+              title={this.state.editable ? "Submit Report" : "Start Monitoring"}
+              type={"solid"}
+              onPress={() =>
+                this.state.editable
+                  ? this.handleClick(this.state.school)
+                  : this.setState({ editable: !this.state.editable })
+              }
+              style={{ marginTop: 10 }}
+            />
+          ) : null}
+        </View>
       </View>
     );
   }

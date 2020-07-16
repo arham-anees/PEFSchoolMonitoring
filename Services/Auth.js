@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
 import CollectionNames from "./CollectionNames";
+import eApprovalStatus from "../Helper/eApprovalStatus";
 
 // export function LoginWithGoogle() {
 //   var provider = new firebase.auth.GoogleAuthProvider();
@@ -131,7 +132,13 @@ export function GetRole(email) {
         .then((doc) => {
           console.log("point 2", doc.data());
           if (doc.exists) {
-            resolve(doc.data().isApproved ? doc.data().roleName : "null");
+            resolve(
+              doc.data().approvalStatus === eApprovalStatus.Accepted
+                ? doc.data().roleName
+                : doc.data().approvalStatus === eApprovalStatus.Rejected
+                ? eApprovalStatus.Rejected
+                : "null"
+            );
           } else {
             resolve("null");
           }

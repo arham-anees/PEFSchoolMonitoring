@@ -25,6 +25,7 @@ import NewClass from "../Screens/Shared/Class/NewClass";
 import TeachersList from "../Screens/Shared/Teacher/TeachersList";
 import Teacher from "../Screens/Shared/Teacher/Teacher";
 import NewTeacher from "../Screens/Shared/Teacher/NewTeacher";
+import ReportsList from "../Screens/Shared/Reports/ReportsList";
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,7 @@ function Navigator() {
           <Stack.Screen name="TeachersList" component={TeachersList} />
           <Stack.Screen name="Teacher" component={Teacher} />
           <Stack.Screen name="NewTeacher" component={NewTeacher} />
+          <Stack.Screen name="ReportsList" component={ReportsList} />
         </Stack.Navigator>
       </NavigationContainer>
     );

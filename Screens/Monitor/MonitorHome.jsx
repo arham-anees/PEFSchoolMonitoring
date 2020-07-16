@@ -24,7 +24,7 @@ function MonitorHome(props) {
       title: " Reports",
       color: "#87CEEB",
       image: "https://img.icons8.com/plasticine/100/000000/business-report.png",
-      page: "Reports",
+      page: "ReportsList",
     },
     {
       id: 3,
@@ -51,7 +51,9 @@ function MonitorHome(props) {
             <View>
               <TouchableOpacity
                 style={[styles.card, { backgroundColor: item.color }]}
-                onPress={() => props.navigation.navigate(item.page)}
+                onPress={() =>
+                  props.navigation.navigate(item.page, { isMonitor: true })
+                }
               >
                 <Image style={styles.cardImage} source={{ uri: item.image }} />
               </TouchableOpacity>

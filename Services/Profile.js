@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
 import CollectionNames from "./CollectionNames";
+import eApprovalStatus from "../Helper/eApprovalStatus";
 
 export function SetOrUpdateProfile(profile) {
   return new Promise((resolve, reject) => {
@@ -114,7 +115,9 @@ export function GetProfiles() {
           let profiles = [];
           if (res.docs.length > 0) {
             res.docs.forEach((x) => {
-              x.data().isApproved ? null : profiles.push(x.data());
+              x.data().approvalStatus === eApprovalStatus.Pending
+                ? profiles.push(x.data())
+                : null;
             });
           }
           resolve(profiles);

@@ -34,6 +34,7 @@ class SchoolsList extends React.Component {
               onPress={() =>
                 this.props.navigation.navigate("School", {
                   school: item,
+                  isMonitor: this.props.route.params.isMonitor,
                 })
               }
             />
