@@ -21,6 +21,13 @@ function AdminHome(props) {
       page: "AssignRoles",
     },
     {
+      id: 3,
+      title: "Schools",
+      color: "#4682B4",
+      image: "https://img.icons8.com/fluent/48/000000/picture.png",
+      page: "PictureSearch",
+    },
+    {
       id: 2,
       title: "View  Reports",
       color: "#87CEEB",

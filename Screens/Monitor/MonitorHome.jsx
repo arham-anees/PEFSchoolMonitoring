@@ -16,8 +16,15 @@ function MonitorHome(props) {
       id: 1,
       title: "Submit Pictures",
       color: "#FF4500",
-      image: "https://img.icons8.com/fluent/48/000000/picture.png",
+      image: "https://img.icons8.com/dusk/64/000000/add-image.png",
       page: "UploadPictures",
+    },
+    {
+      id: 3,
+      title: "Schools",
+      color: "#4682B4",
+      image: "https://img.icons8.com/fluent/48/000000/picture.png",
+      page: "PictureSearch",
     },
     {
       id: 2,

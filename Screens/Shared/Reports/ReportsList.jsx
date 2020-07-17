@@ -34,9 +34,8 @@ class ReportsList extends React.Component {
                 .toLocaleString()
                 .substring(0, 24)}
               onPress={() =>
-                this.props.navigation.navigate("School", {
-                  school: report,
-                  isMonitor: false,
+                this.props.navigation.navigate("Report", {
+                  report: report,
                 })
               }
             />
