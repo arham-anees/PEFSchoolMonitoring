@@ -9,11 +9,18 @@ class AssignRoles extends React.Component {
     super(props);
     this.state = {
       users: [],
+      updatedUsers: [],
     };
   }
   componentDidMount() {
     GetProfiles()
-      .then((res) => this.setState({ users: res }))
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          users: res.profiles,
+          updatedUsers: res.updatedProfiles,
+        });
+      })
       .catch((err) => this.setState({ error: err }));
   }
   // handleClick = () => {
@@ -42,16 +49,17 @@ class AssignRoles extends React.Component {
     SetOrUpdateProfile(profile)
       .then((res) => {
         this.setState({
-          accepted: true,
+          accepted: false,
           user: profile.name,
           role: profile.role,
         });
       })
       .catch((err) => this.setState({ error: err }));
   };
+
   render() {
     return (
-      <View>
+      <View style={{ margin: 10 }}>
         <View>
           {this.state.accepted != null ? (
             <Text>
@@ -79,8 +87,27 @@ class AssignRoles extends React.Component {
             />
           ))
         ) : (
-          <Text style={{ marginTop: 20 }}>No New Profile</Text>
+          <Text style={{ marginTop: 20, marginBottom: 10 }}>
+            No New Profile
+          </Text>
         )}
+        {this.state.updatedUsers.length > 0 ? (
+          <React.Fragment>
+            <Text style={{ marginTop: 20, fontSize: 18 }}>
+              Approved/Rejected Users
+            </Text>
+            {this.state.updatedUsers.map((l, i) => (
+              <ListItem
+                key={i}
+                leftAvatar={{ source: { uri: l.avatar_url } }}
+                title={l.name}
+                subtitle={l.subtitle}
+                disabled={true}
+                bottomDivider
+              />
+            ))}
+          </React.Fragment>
+        ) : null}
       </View>
     );
   }

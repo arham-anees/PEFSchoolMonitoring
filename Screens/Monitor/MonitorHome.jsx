@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,6 +8,7 @@ import {
   FlatList,
   BackHandler,
 } from "react-native";
+import { Input } from "react-native-elements";
 
 BackHandler.addEventListener("hardwareBackPress", () => BackHandler.exitApp());
 function MonitorHome(props) {
@@ -21,7 +22,7 @@ function MonitorHome(props) {
     },
     {
       id: 3,
-      title: "Schools",
+      title: "Pictures",
       color: "#4682B4",
       image: "https://img.icons8.com/fluent/48/000000/picture.png",
       page: "PictureSearch",

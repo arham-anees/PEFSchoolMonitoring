@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { Button } from "react-native-elements";
 
 import { SignOut } from "../Services/Auth";
 
@@ -11,13 +12,12 @@ import MonitorHome from "../Screens/Monitor/MonitorHome";
 import AssignRoles from "../Screens/Admin/AssignRoles";
 import AssignRoleDetail from "../Screens/Admin/AssignRoleDetail";
 import AdminHome from "../Screens/Admin/AdminHome";
-import School from "../Screens/Shared/School";
 import Reports from "../Screens/Shared/Reports";
 import ReportDetail from "../Screens/Shared/ReportDetail";
 import UploadPictures from "../Screens/Monitor/UploadPictures";
-import SchoolsList from "../Screens/Shared/SchoolsList";
+import SchoolsList from "../Screens/Shared/School/SchoolsList";
+import School from "../Screens/Shared/School/School";
 import Profile from "../Screens/Shared/Profile";
-import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ClassesList from "../Screens/Shared/Class/ClassesList";
 import Class from "../Screens/Shared/Class/Class";

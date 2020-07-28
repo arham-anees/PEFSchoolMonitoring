@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import { GetImages } from "../../../Services/Images";
 import { Text, Input } from "react-native-elements";
 import { Dimensions } from "react-native";
@@ -17,7 +17,7 @@ class Pictures extends React.Component {
   }
   render() {
     return (
-      <View>
+      <ScrollView>
         {this.state.pictures.length === 0 ? (
           <Text>No Picture Found</Text>
         ) : (
@@ -37,25 +37,29 @@ class Pictures extends React.Component {
               disabled={true}
               value={this.props.route.params.schoolId}
             />
-            {this.state.pictures.map((img, i) => (
-              <View>
-                <Image
-                  key={i}
-                  source={{ uri: img.downloadURL }}
-                  style={{
-                    height: Math.round(Dimensions.get("window").height - 30),
-                    width: Math.round(Dimensions.get("window").width),
-                    margin: 5,
-                    resizeMode: "contain",
-                  }}
-                />
-                <Text>{img.lastModifiedBy}</Text>
-                <Text>{Date(img.lastModifiedOn)}</Text>
-              </View>
-            ))}
+            {this.state.pictures.map((img, i) =>
+              img.schoolId === this.props.schoolId &&
+              img.grade === this.props.grade &&
+              img.section === this.props.section ? (
+                <View>
+                  <Image
+                    key={i}
+                    source={{ uri: img.downloadURL }}
+                    style={{
+                      height: Math.round(Dimensions.get("window").height - 30),
+                      width: Math.round(Dimensions.get("window").width),
+                      margin: 5,
+                      resizeMode: "contain",
+                    }}
+                  />
+                  <Text>{img.lastModifiedBy}</Text>
+                  <Text>{Date(img.lastModifiedOn)}</Text>
+                </View>
+              ) : null
+            )}
           </View>
         )}
-      </View>
+      </ScrollView>
     );
   }
 }

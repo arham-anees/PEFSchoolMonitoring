@@ -113,14 +113,16 @@ export function GetProfiles() {
         .get()
         .then((res) => {
           let profiles = [];
+          let updatedProfiles = [];
           if (res.docs.length > 0) {
             res.docs.forEach((x) => {
+              x.data().approvalStatus === undefined ||
               x.data().approvalStatus === eApprovalStatus.Pending
                 ? profiles.push(x.data())
-                : null;
+                : updatedProfiles.push(x.data());
             });
           }
-          resolve(profiles);
+          resolve({ profiles, updatedProfiles });
         })
         .catch((err) => reject(err));
     } catch (err) {

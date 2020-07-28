@@ -95,7 +95,7 @@ class Report extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.report.noOfWritingBoards.toString()}
+            value={this.state.report.noOfWritingBoards}
             onChangeText={(text) => {
               this.state.report.noOfWritingBoards = parseInt(text);
               this.setState({ report: this.state.report });
@@ -108,7 +108,7 @@ class Report extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.report.noOfProperFans.toString()}
+            value={this.state.report.noOfProperFans}
             onChangeText={(text) => {
               this.state.report.noOfProperFans = parseInt(text);
               this.setState({ report: this.state.report });
@@ -121,7 +121,7 @@ class Report extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.report.noOfTeacherChairs.toString()}
+            value={this.state.report.noOfTeacherChairs}
             onChangeText={(text) => {
               this.state.report.noOfTeacherChairs = parseInt(text);
               this.setState({ report: this.state.report });

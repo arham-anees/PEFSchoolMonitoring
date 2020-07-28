@@ -29,6 +29,7 @@ class ReportsList extends React.Component {
         ) : (
           this.state.reports.map((report, i) => (
             <ListItem
+              key={i}
               title={report.name}
               subtitle={Date(report.lastModifiedOn)
                 .toLocaleString()

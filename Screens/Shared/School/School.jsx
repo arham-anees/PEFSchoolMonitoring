@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
 import { CheckBox, Button } from "react-native-elements";
-import { updateSchool } from "../../Services/Schools";
+import { updateSchool } from "../../../Services/Schools";
 import firebase, { auth } from "firebase";
 
 class School extends React.Component {

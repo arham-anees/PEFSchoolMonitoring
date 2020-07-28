@@ -25,12 +25,12 @@ function AssignRoleDetail(props) {
         <Button
           title="Reject"
           type="outline"
-          buttonStyle={{ width: "90%" }}
+          buttonStyle={{ width: 80 }}
           onPress={() => props.route.params.reject(props.route.params.profile)}
         />
         <Button
           title="Approve"
-          buttonStyle={{ width: "90%" }}
+          buttonStyle={{ width: 80 }}
           onPress={() => props.route.params.accept(props.route.params.profile)}
         />
       </View>
