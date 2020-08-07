@@ -1,3 +1,4 @@
+<script src="http://192.168.86.129:8097"></script>;
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Input, Button } from "react-native-elements";
@@ -11,18 +12,22 @@ function PictureSearch(props) {
       <Input
         label="School ID"
         placeholder="School ID"
+        keyboardType={"number-pad"}
+        value={isNaN(schoolId.toString()) ? "" : schoolId.toString()}
         onChangeText={(text) => setSchoolId(parseInt(text))}
       />
       <Input
         label="Grade"
         placeholder="Grade"
+        keyboardType={"number-pad"}
+        value={isNaN(grade.toString()) ? "" : grade.toString()}
         onChangeText={(text) => setGrade(parseInt(text))}
       />
       <Input
         label="Section"
         placeholder="section"
-        value={section.toString()}
-        onChangeText={(text) => setSection(parseInt(text))}
+        value={section}
+        onChangeText={(text) => setSection(text)}
       />
       <Button
         title={"Search"}

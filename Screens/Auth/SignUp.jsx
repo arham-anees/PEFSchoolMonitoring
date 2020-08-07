@@ -28,6 +28,7 @@ export default function SignUp(props) {
             style={styles.inputs}
             placeholder="Email"
             keyboardType="email-address"
+            autoCapitalize={"none"}
             underlineColorAndroid="transparent"
             onChangeText={(value) => setEmail(value)}
           />

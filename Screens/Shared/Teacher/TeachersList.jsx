@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { ListItem, Button } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
 
 class TeachersList extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class TeachersList extends React.Component {
   };
   render() {
     return (
-      <View>
+      <ScrollView>
         {this.state.teachersList.map((teacher, i) => {
           return (
             <ListItem
@@ -48,7 +49,7 @@ class TeachersList extends React.Component {
             }
           />
         ) : null}
-      </View>
+      </ScrollView>
     );
   }
 }

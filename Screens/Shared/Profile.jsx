@@ -8,25 +8,34 @@ import { SetOrUpdateProfile, GetProfile } from "../../Services/Profile";
 import { ToastAndroid } from "react-native";
 
 let handleClick = (name, email, phone, serviceNumber, role) => {
-  try {
-    SetOrUpdateProfile({
-      name,
-      email,
-      phone,
-      serviceNumber,
-      roleName: role,
-    })
-      .then((response) => {
-        console.log("response of creating another user", response);
-        alert(
-          "Profile is updated, please wait for approval from admin." +
-            "\n You can update your profile until approved"
-        );
+  if (
+    serviceNumber !== undefined &&
+    serviceNumber !== null &&
+    serviceNumber !== ""
+  )
+    try {
+      SetOrUpdateProfile({
+        name,
+        email,
+        phone,
+        serviceNumber,
+        roleName: role,
       })
-      .catch((err) => console.error("Error in handleClick", err));
-  } catch (error) {
-    console.error(error);
-  }
+        .then((response) => {
+          console.log("response of creating another user", response);
+          alert(
+            "Profile is updated, please wait for approval from admin." +
+              "\n You can update your profile until approved"
+          );
+        })
+        .catch((err) => {
+          console.log("Error in handleClick", err);
+          alert("Error while updating profile");
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  else alert("invalid service number. please enter valid service number");
 };
 
 function Profile(props) {

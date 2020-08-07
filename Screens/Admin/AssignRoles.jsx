@@ -1,8 +1,10 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, ActivityIndicator, StyleSheet } from "react-native";
+import Modal from "react-native-modal";
 import { ListItem } from "react-native-elements";
 import { GetProfiles, SetOrUpdateProfile } from "../../Services/Profile";
 import eApprovalStatus from "../../Helper/eApprovalStatus";
+import ActivityIndicatorModal from "../../Components/ActivityIndicatorModal";
 
 class AssignRoles extends React.Component {
   constructor(props) {
@@ -10,18 +12,23 @@ class AssignRoles extends React.Component {
     this.state = {
       users: [],
       updatedUsers: [],
+      showIndicator: true,
     };
   }
-  componentDidMount() {
+  getProfile = () => {
     GetProfiles()
       .then((res) => {
         console.log(res);
         this.setState({
           users: res.profiles,
           updatedUsers: res.updatedProfiles,
+          showIndicator: false,
         });
       })
-      .catch((err) => this.setState({ error: err }));
+      .catch((err) => this.setState({ error: err, showIndicator: false }));
+  };
+  componentDidMount() {
+    this.getProfile();
   }
   // handleClick = () => {
   //   this.props.navigation.navigate("AssignRoleDetail", {
@@ -32,6 +39,7 @@ class AssignRoles extends React.Component {
   // };
 
   handleAccept = (profile) => {
+    this.setState({ showIndicator: true });
     profile.approvalStatus = eApprovalStatus.Accepted;
     SetOrUpdateProfile(profile)
       .then((res) => {
@@ -40,6 +48,10 @@ class AssignRoles extends React.Component {
           user: profile.name,
           role: profile.role,
         });
+        this.props.navigation.goBack();
+        this.getProfile();
+        this.setState({ showIndicator: false });
+        alert("user status has been updated.");
       })
       .catch((err) => this.setState({ error: err }));
   };
@@ -52,24 +64,19 @@ class AssignRoles extends React.Component {
           accepted: false,
           user: profile.name,
           role: profile.role,
+          showIndicator: false,
         });
+        alert("error updating user");
       })
-      .catch((err) => this.setState({ error: err }));
+      .catch((err) => this.setState({ error: err, showIndicator: false }));
   };
 
   render() {
     return (
       <View style={{ margin: 10 }}>
-        <View>
-          {this.state.accepted != null ? (
-            <Text>
-              {this.state.user} is{" "}
-              {this.state.accepted ? "accepted " : "rejected "}
-              as {this.state.role}
-            </Text>
-          ) : null}
-        </View>
-        {this.state.users.length > 0 ? (
+        {this.state.showIndicator ? (
+          <ActivityIndicator />
+        ) : this.state.users.length > 0 ? (
           this.state.users.map((l, i) => (
             <ListItem
               key={i}
@@ -103,6 +110,7 @@ class AssignRoles extends React.Component {
                 title={l.name}
                 subtitle={l.subtitle}
                 disabled={true}
+                rightSubtitle={l.approvalStatus}
                 bottomDivider
               />
             ))}

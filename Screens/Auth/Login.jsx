@@ -87,6 +87,7 @@ export default function Login(props) {
             placeholder="Email"
             keyboardType="email-address"
             underlineColorAndroid="transparent"
+            autoCapitalize={"none"}
             value={email}
             onChangeText={(value) => setEmail(value)}
           />

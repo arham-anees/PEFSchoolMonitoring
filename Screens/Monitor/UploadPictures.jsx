@@ -131,14 +131,22 @@ class UploadPictures extends React.Component {
             label="School"
             placeholder="School ID"
             keyboardType={"number-pad"}
-            value={this.state.schoolId.toString()}
+            value={
+              isNaN(this.state.schoolId.toString())
+                ? ""
+                : this.state.schoolId.toString()
+            }
             onChangeText={(text) => this.setState({ schoolId: parseInt(text) })}
           />
           <Input
             label="Class"
             placeholder="Class"
             keyboardType={"number-pad"}
-            value={this.state.class.toString()}
+            value={
+              isNaN(this.state.schoolId.toString())
+                ? ""
+                : this.state.class.toString()
+            }
             onChangeText={(text) => this.setState({ class: parseInt(text) })}
           />
           <Input

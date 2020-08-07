@@ -72,6 +72,7 @@ export function CreateUserWithEmailAndPassword(email, password) {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
+          alert(errorMessage);
         });
     } else alert("invalid user password");
   } else alert("invalid user email");
@@ -83,7 +84,7 @@ export function SignInWithEmailAndPassword(email, password) {
       .signInWithEmailAndPassword(email, password)
       .then((res) => resolve(res))
       .catch(function (error) {
-        console.error("Error logging in", error);
+        console.log("Error logging in", error);
         reject(error);
       });
   });

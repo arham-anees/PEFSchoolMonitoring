@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
+import "firebase/auth";
 import CollectionNames from "./CollectionNames";
 
 export function setReport(school) {
@@ -30,7 +31,14 @@ export function getAllReports() {
             let schools = [];
             response.docs.map((x) => {
               if (x.exists) {
-                schools.push(x.data());
+                if (x.data().isSubmitted)
+                  schools.push({ record: x.data(), id: x.id });
+                else if (
+                  firebase.auth().currentUser.providerData[0].email ===
+                  x.data().lastModifiedBy
+                ) {
+                  schools.push({ record: x.data(), id: x.id });
+                }
               }
             });
             console.log(schools);
@@ -38,6 +46,25 @@ export function getAllReports() {
           } else {
             resolve(null);
           }
+        })
+        .catch((err) => reject(err));
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+export function submitReport(report, doc) {
+  return new Promise((resolve, reject) => {
+    try {
+      report.isSubmitted = true;
+      report.submissionDate = Date.now();
+      let db = firebase.firestore();
+      db.collection(CollectionNames.Reports)
+        .doc(doc)
+        .update(report)
+        .then((response) => {
+          resolve(response);
         })
         .catch((err) => reject(err));
     } catch (err) {

@@ -3,6 +3,7 @@ import { Text, View, TextInput, StyleSheet } from "react-native";
 import { CheckBox, Button } from "react-native-elements";
 import { updateSchool } from "../../../Services/Schools";
 import firebase, { auth } from "firebase";
+import { ScrollView } from "react-native-gesture-handler";
 
 class School extends React.Component {
   constructor(props) {
@@ -55,18 +56,18 @@ class School extends React.Component {
   };
 
   handleClick = (school) => {
-    //submit report
+    //save report
 
     if (Date.now() - this.state.lastOperation > 1000) {
       this.setState({ lastOperation: Date.now() });
       updateSchool(school)
         .then((res) => {
-          alert("Report submitted successfully");
+          alert("Report Saved successfully");
           this.setState({ editable: !this.state.editable });
         })
         .catch((err) => {
           console.log(err);
-          alert("Failed to submit report. please try again later");
+          alert("Failed to save report. please try again later");
         });
       console.log(school);
     }
@@ -138,7 +139,7 @@ class School extends React.Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <CheckBox
           title="Overcrowded"
           checked={this.state.school.isOvercrowded}
@@ -246,6 +247,7 @@ class School extends React.Component {
           <Button
             title={"Classes"}
             type={"outline"}
+            containerStyle={styles.marginTop10}
             onPress={() =>
               this.props.navigation.navigate("ClassesList", {
                 classes: this.state.school.classes,
@@ -265,22 +267,22 @@ class School extends React.Component {
                 editable: this.state.editable,
               })
             }
-            style={{ marginTop: 10 }}
+            containerStyle={styles.marginTop10}
           />
           {this.state.isMonitor ? (
             <Button
-              title={this.state.editable ? "Submit Report" : "Start Monitoring"}
+              title={this.state.editable ? "Save Report" : "Start Monitoring"}
               type={"solid"}
               onPress={() =>
                 this.state.editable
                   ? this.handleClick(this.state.school)
                   : this.setState({ editable: !this.state.editable })
               }
-              style={{ marginTop: 10 }}
+              containerStyle={{ marginTop: 10, marginBottom: 20 }}
             />
           ) : null}
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -308,4 +310,5 @@ const styles = StyleSheet.create({
     width: "50%",
     padding: 10,
   },
+  marginTop10: { marginTop: 10 },
 });

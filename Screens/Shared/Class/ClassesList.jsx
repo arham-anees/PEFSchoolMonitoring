@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { ListItem, Button } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
 
 function ClassesList(props) {
   let classesList = props.route.params.classes;
@@ -10,7 +11,7 @@ function ClassesList(props) {
   console.log(classesList);
 
   return (
-    <View>
+    <ScrollView>
       {classesList.map((_class, i) => {
         return (
           <ListItem
@@ -36,7 +37,7 @@ function ClassesList(props) {
           onPress={() => props.navigation.navigate("NewClass", { addClass })}
         />
       ) : null}
-    </View>
+    </ScrollView>
   );
 }
 export default ClassesList;

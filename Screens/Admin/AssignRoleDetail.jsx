@@ -1,10 +1,17 @@
+<script src="http://localhost:8097"></script>;
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
+import { useState } from "react";
+import ActivityIndicatorModal from "../../Components/ActivityIndicatorModal";
 
 function AssignRoleDetail(props) {
+  let [show, setShow] = useState(false);
   return (
     <View style={Styles.container}>
+      <View>
+        <ActivityIndicatorModal show={show} />
+      </View>
       <View style={Styles.justifyBetween}>
         <Text style={Styles.label}>Name</Text>
         <Text style={Styles.value}>{props.route.params.profile.name}</Text>
@@ -26,12 +33,20 @@ function AssignRoleDetail(props) {
           title="Reject"
           type="outline"
           buttonStyle={{ width: 80 }}
-          onPress={() => props.route.params.reject(props.route.params.profile)}
+          onPress={() => {
+            setShow(true);
+            props.route.params.reject(props.route.params.profile);
+            setShow(false);
+          }}
         />
         <Button
           title="Approve"
           buttonStyle={{ width: 80 }}
-          onPress={() => props.route.params.accept(props.route.params.profile)}
+          onPress={() => {
+            setShow(true);
+            props.route.params.accept(props.route.params.profile);
+            setShow(false);
+          }}
         />
       </View>
     </View>

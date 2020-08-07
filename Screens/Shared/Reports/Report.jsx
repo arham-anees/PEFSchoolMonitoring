@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
 import { CheckBox, Button } from "react-native-elements";
+import { submitReport } from "../../../Services/Reports";
 
 class Report extends React.Component {
   constructor(props) {
@@ -152,6 +153,15 @@ class Report extends React.Component {
               })
             }
             style={{ marginTop: 10 }}
+          />
+          <Button
+            title={"Submit"}
+            type={"solid"}
+            onPress={() =>
+              submitReport(this.state.report, this.props.route.params.id)
+            }
+            style={{ marginTop: 10, marginBottom: 20 }}
+            disabled={this.state.report.isSubmitted}
           />
         </View>
       </View>
