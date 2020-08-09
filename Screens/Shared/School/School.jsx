@@ -76,12 +76,16 @@ class School extends React.Component {
   toggleIsOvercrowded = () => {
     if (this.state.editable) {
       this.state.school.isOvercrowded = !this.state.school.isOvercrowded;
+      if (!this.state.school.isOvercrowded) this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
   toggleIsCongested = () => {
     if (this.state.editable) {
       this.state.school.isCongested = !this.state.school.isCongested;
+      if (!this.state.school.isCongested) this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
@@ -89,6 +93,8 @@ class School extends React.Component {
     if (this.state.editable) {
       this.state.school.isLightArtificial = !this.state.school
         .isLightArtificial;
+      if (this.state.school.isLightArtificial) this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
@@ -96,6 +102,9 @@ class School extends React.Component {
     if (this.state.editable) {
       this.state.school.isPlasteringRequired = !this.state.school
         .isPlasteringRequired;
+      if (!this.state.school.isPlasteringRequired)
+        this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
@@ -104,12 +113,17 @@ class School extends React.Component {
     if (this.state.editable) {
       this.state.school.isRoomsConditionProper = !this.state.school
         .isRoomsConditionProper;
+      if (this.state.school.isRoomsConditionProper)
+        this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
   toggleIsStudentCharged = () => {
     if (this.state.editable) {
       this.state.school.isStudentCharged = !this.state.school.isStudentCharged;
+      if (!this.state.school.isStudentCharged) this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
@@ -118,6 +132,8 @@ class School extends React.Component {
     if (this.state.editable) {
       this.state.school.isFurnitureProper = !this.state.school
         .isFurnitureProper;
+      if (this.state.school.isFurnitureProper) this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
@@ -125,6 +141,8 @@ class School extends React.Component {
   toggleAreTeachersPaid = () => {
     if (this.state.editable) {
       this.state.school.areTeachersPaid = !this.state.school.areTeachersPaid;
+      if (this.state.school.areTeachersPaid) this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };
@@ -133,6 +151,8 @@ class School extends React.Component {
     if (this.state.editable) {
       this.state.school.areRoomsVentilated = !this.state.school
         .areRoomsVentilated;
+      if (this.state.school.areRoomsVentilated) this.state.school.rating += 1;
+      else this.state.school.rating -= 1;
       this.setState(this.state.school);
     }
   };

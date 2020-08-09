@@ -10,7 +10,20 @@ class Report extends React.Component {
       report: this.props.route.params.report,
     };
   }
+  getRating = () => {
+    return (this.state.report.rating / 9) * 10;
+  };
 
+  getRemarks = () => {
+    const rating = this.getRating();
+
+    if (rating > 8) return "Should be awarded";
+    else if (rating >= 7.5) return "Should be warned";
+    else if (rating >= 7) return "Fine is 5,000";
+    else if (rating >= 6.5) return "Fine is 10,000";
+    else if (rating >= 6) return "Fine is 20,000";
+    else return "Should be reviewed";
+  };
   render() {
     return (
       <View>
@@ -24,6 +37,14 @@ class Report extends React.Component {
             <Text>
               {Date(this.state.report.lastModifiedOn).substring(0, 24)}
             </Text>
+          </View>
+          <View style={styles.wrapper}>
+            <Text>Rating</Text>
+            <Text>{this.getRating().toString()}/10</Text>
+          </View>
+          <View style={styles.wrapper}>
+            <Text>Remarks</Text>
+            <Text>{this.getRemarks()}</Text>
           </View>
         </View>
         <CheckBox

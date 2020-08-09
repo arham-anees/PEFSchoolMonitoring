@@ -7,7 +7,6 @@ import {
   Image,
   FlatList,
   BackHandler,
-  ImagePropTypes,
 } from "react-native";
 
 BackHandler.addEventListener("hardwareBackPress", () => BackHandler.exitApp());
@@ -39,13 +38,6 @@ function AdminHome(props) {
       title: "Schools",
       color: "#4682B4",
       image: "https://img.icons8.com/office/70/000000/home-page.png",
-      page: "SchoolsList",
-    },
-    {
-      id: 3,
-      title: "Generate Rating",
-      color: "#4682B4",
-      image: "https://img.icons8.com/bubbles/50/000000/leaderboard.png",
       page: "SchoolsList",
     },
   ];
