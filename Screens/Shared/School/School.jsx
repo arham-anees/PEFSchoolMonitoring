@@ -158,6 +158,7 @@ class School extends React.Component {
   };
 
   render() {
+    console.log(this.state.school.rating);
     return (
       <ScrollView>
         <CheckBox
@@ -230,9 +231,15 @@ class School extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.school.noOfWritingBoards.toString()}
+            value={
+              this.state.school.noOfWritingBoards === -1
+                ? ""
+                : this.state.school.noOfWritingBoards.toString()
+            }
             onChangeText={(text) => {
-              this.state.school.noOfWritingBoards = parseInt(text);
+              text === ""
+                ? (this.state.school.noOfWritingBoards = -1)
+                : (this.state.school.noOfWritingBoards = parseInt(text));
               this.setState({ school: this.state.school });
             }}
           />
@@ -243,9 +250,15 @@ class School extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.school.noOfProperFans.toString()}
+            value={
+              this.state.school.noOfProperFans === -1
+                ? ""
+                : this.state.school.noOfProperFans.toString()
+            }
             onChangeText={(text) => {
-              this.state.school.noOfProperFans = parseInt(text);
+              text === ""
+                ? (this.state.school.noOfProperFans = -1)
+                : (this.state.school.noOfProperFans = parseInt(text));
               this.setState({ school: this.state.school });
             }}
           />
@@ -256,9 +269,15 @@ class School extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.school.noOfTeacherChairs.toString()}
+            value={
+              this.state.school.noOfTeacherChairs === -1
+                ? ""
+                : this.state.school.noOfTeacherChairs.toString()
+            }
             onChangeText={(text) => {
-              this.state.school.noOfTeacherChairs = parseInt(text);
+              text === ""
+                ? (this.state.school.noOfTeacherChairs = -1)
+                : (this.state.school.noOfTeacherChairs = parseInt(text));
               this.setState({ school: this.state.school });
             }}
           />

@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
 import { CheckBox, Button } from "react-native-elements";
 import { submitReport } from "../../../Services/Reports";
+import { ScrollView } from "react-native-gesture-handler";
 
 class Report extends React.Component {
   constructor(props) {
@@ -10,6 +11,14 @@ class Report extends React.Component {
       report: this.props.route.params.report,
     };
   }
+  handleSubmitPress = () => {
+    submitReport(this.state.report, this.props.route.params.id)
+      .then((x) => alert("Report Submitted successfully"))
+      .catch((err) => {
+        console.log(err);
+        alert("Report Submission failed");
+      });
+  };
   getRating = () => {
     return (this.state.report.rating / 9) * 10;
   };
@@ -26,7 +35,7 @@ class Report extends React.Component {
   };
   render() {
     return (
-      <View>
+      <ScrollView>
         <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
           <View style={styles.wrapper}>
             <Text>Monitor</Text>
@@ -117,9 +126,15 @@ class Report extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.report.noOfWritingBoards}
+            value={
+              this.state.report.noOfWritingBoards === -1
+                ? ""
+                : this.state.report.noOfWritingBoards
+            }
             onChangeText={(text) => {
-              this.state.report.noOfWritingBoards = parseInt(text);
+              text === ""
+                ? (this.state.report.noOfWritingBoards = -1)
+                : (this.state.report.noOfWritingBoards = parseInt(text));
               this.setState({ report: this.state.report });
             }}
           />
@@ -130,9 +145,15 @@ class Report extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.report.noOfProperFans}
+            value={
+              this.state.report.noOfProperFans === -1
+                ? ""
+                : this.state.report.noOfProperFans.toString()
+            }
             onChangeText={(text) => {
-              this.state.report.noOfProperFans = parseInt(text);
+              text !== ""
+                ? (this.state.report.noOfProperFans = parseInt(text))
+                : (this.state.report.noOfProperFans = -1);
               this.setState({ report: this.state.report });
             }}
           />
@@ -143,9 +164,15 @@ class Report extends React.Component {
             style={styles.textInput}
             keyboardType={"number-pad"}
             editable={this.state.editable}
-            value={this.state.report.noOfTeacherChairs}
+            value={
+              this.state.report.noOfTeacherChairs === -1
+                ? ""
+                : this.state.report.noOfTeacherChairs.toString()
+            }
             onChangeText={(text) => {
-              this.state.report.noOfTeacherChairs = parseInt(text);
+              text === ""
+                ? (this.state.report.noOfTeacherChairs = -1)
+                : (this.state.report.noOfTeacherChairs = parseInt(text));
               this.setState({ report: this.state.report });
             }}
           />
@@ -154,6 +181,7 @@ class Report extends React.Component {
           <Button
             title={"Classes"}
             type={"outline"}
+            style={styles.btn}
             onPress={() =>
               this.props.navigation.navigate("ClassesList", {
                 classes: this.state.report.classes,
@@ -166,6 +194,7 @@ class Report extends React.Component {
           <Button
             title={"Teachers"}
             type={"outline"}
+            style={styles.btn}
             onPress={() =>
               this.props.navigation.navigate("TeachersList", {
                 teachers: this.state.report.teachers,
@@ -178,14 +207,12 @@ class Report extends React.Component {
           <Button
             title={"Submit"}
             type={"solid"}
-            onPress={() =>
-              submitReport(this.state.report, this.props.route.params.id)
-            }
-            style={{ marginTop: 10, marginBottom: 20 }}
+            onPress={this.handleSubmitPress}
+            containerStyle={{ marginTop: 10, marginBottom: 20 }}
             disabled={this.state.report.isSubmitted}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -212,5 +239,8 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     width: "50%",
     padding: 10,
+  },
+  btn: {
+    marginBottom: 10,
   },
 });
