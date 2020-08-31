@@ -22,6 +22,7 @@ class Class extends React.Component {
     this.setState({ class: _class, editable });
   }
   render() {
+    let cls = this.state.class;
     if (this.state.class === undefined || this.state.class === null)
       return <ActivityIndicator />;
     else
@@ -32,7 +33,9 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.totalEnrollment}
+              value={
+                cls.totalEnrollment > 0 ? cls.totalEnrollment.toString() : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.totalEnrollment = parseInt(text);
@@ -45,7 +48,9 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.activeStudents}
+              value={
+                cls.activeStudents > 0 ? cls.activeStudents.toString() : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.activeStudents = parseInt(text);
@@ -58,7 +63,9 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.disabledStudents}
+              value={
+                cls.disabledStudents > 0 ? cls.disabledStudents.toString() : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.disabledStudents = parseInt(text);
@@ -71,7 +78,9 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.nonPefStudents}
+              value={
+                cls.nonPefStudents > 0 ? cls.nonPefStudents.toString() : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.nonPefStudents = parseInt(text);
@@ -84,7 +93,11 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.unregisteredStudents}
+              value={
+                cls.unregisteredStudents > 0
+                  ? cls.unregisteredStudents.toString()
+                  : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.unregisteredStudents = parseInt(text);
@@ -98,7 +111,11 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.dropoutStudents}
+              value={
+                this.state.class.dropoutStudents > 0
+                  ? cls.dropoutStudents.toString()
+                  : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.dropoutStudents = parseInt(text);
@@ -111,7 +128,11 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.uniformlessStudents}
+              value={
+                this.state.class.uniformlessStudents > 0
+                  ? cls.uniformlessStudents.toString()
+                  : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.uniformlessStudents = parseInt(text);
@@ -125,7 +146,11 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.classroomCapacity}
+              value={
+                this.state.class.classroomCapacity > 0
+                  ? cls.classroomCapacity.toString()
+                  : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.classroomCapacity = parseInt(text);
@@ -138,7 +163,11 @@ class Class extends React.Component {
             <TextInput
               style={styles.textInput}
               keyboardType={"number-pad"}
-              value={this.state.class.noOfFurniture}
+              value={
+                this.state.class.noOfFurniture > 0
+                  ? cls.noOfFurniture.toString()
+                  : "-"
+              }
               editable={this.state.editable}
               onChangeText={(text) => {
                 this.state.class.noOfFurniture = parseInt(text);

@@ -22,7 +22,7 @@ class ReportsList extends React.Component {
   }
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={{ marginBottom: 20 }}>
         {this.state.isLoading ? (
           <ActivityIndicator style={{ marginTop: 20 }} />
         ) : this.state.reports === null || this.state.reports.length === 0 ? (
@@ -48,29 +48,31 @@ class ReportsList extends React.Component {
                 /{this.state.reports.length}
               </Text>
             </View>
-            {this.state.reports.map((report) => (
-              <React.Fragment key={report.id}>
-                <ListItem
-                  title={report.record.name}
-                  subtitle={new Date(
-                    report.record.lastModifiedOn
-                  ).toLocaleString()}
-                  rightTitle={
-                    report.record.isSubmitted ? "Submitted" : "Pending"
-                  }
-                  onPress={() =>
-                    this.props.navigation.navigate("Report", {
-                      report: report.record,
-                      id: report.id,
-                    })
-                  }
-                  containerStyle={{
-                    backgroundColor: "white",
-                  }}
-                />
-                <Divider key={report.id + "1"} />
-              </React.Fragment>
-            ))}
+            {this.state.reports
+              .sort((a, b) => a.lastModifiedOn - b.lastModifiedOn)
+              .map((report) => (
+                <React.Fragment key={report.id}>
+                  <ListItem
+                    title={report.record.name}
+                    subtitle={new Date(
+                      report.record.lastModifiedOn
+                    ).toLocaleString()}
+                    rightTitle={
+                      report.record.isSubmitted ? "Submitted" : "Pending"
+                    }
+                    onPress={() =>
+                      this.props.navigation.navigate("Report", {
+                        report: report.record,
+                        id: report.id,
+                      })
+                    }
+                    containerStyle={{
+                      backgroundColor: "white",
+                    }}
+                  />
+                  <Divider />
+                </React.Fragment>
+              ))}
           </React.Fragment>
         )}
       </ScrollView>

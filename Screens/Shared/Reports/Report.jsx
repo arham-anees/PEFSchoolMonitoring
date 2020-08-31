@@ -9,6 +9,7 @@ class Report extends React.Component {
     super(props);
     this.state = {
       report: this.props.route.params.report,
+      editable: false,
     };
   }
   handleSubmitPress = () => {
@@ -49,7 +50,7 @@ class Report extends React.Component {
           </View>
           <View style={styles.wrapper}>
             <Text>Rating</Text>
-            <Text>{this.getRating().toString()}/10</Text>
+            <Text>{this.getRating().toFixed(2).toString()}/10</Text>
           </View>
           <View style={styles.wrapper}>
             <Text>Remarks</Text>
@@ -181,7 +182,7 @@ class Report extends React.Component {
           <Button
             title={"Classes"}
             type={"outline"}
-            style={styles.btn}
+            containerStyle={{ marginTop: 10 }}
             onPress={() =>
               this.props.navigation.navigate("ClassesList", {
                 classes: this.state.report.classes,
@@ -202,7 +203,7 @@ class Report extends React.Component {
                 editable: this.state.editable,
               })
             }
-            style={{ marginTop: 10 }}
+            containerStyle={{ marginTop: 10 }}
           />
           <Button
             title={"Submit"}

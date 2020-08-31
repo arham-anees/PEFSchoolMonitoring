@@ -5,6 +5,7 @@ import { ListItem } from "react-native-elements";
 import { GetProfiles, SetOrUpdateProfile } from "../../Services/Profile";
 import eApprovalStatus from "../../Helper/eApprovalStatus";
 import ActivityIndicatorModal from "../../Components/ActivityIndicatorModal";
+import { ScrollView } from "react-native-gesture-handler";
 
 class AssignRoles extends React.Component {
   constructor(props) {
@@ -41,6 +42,7 @@ class AssignRoles extends React.Component {
   handleAccept = (profile) => {
     this.setState({ showIndicator: true });
     profile.approvalStatus = eApprovalStatus.Accepted;
+
     SetOrUpdateProfile(profile)
       .then((res) => {
         this.setState({
@@ -73,7 +75,7 @@ class AssignRoles extends React.Component {
 
   render() {
     return (
-      <View style={{ margin: 10 }}>
+      <ScrollView style={{ margin: 10 }}>
         {this.state.showIndicator ? (
           <ActivityIndicator />
         ) : this.state.users.length > 0 ? (
@@ -109,14 +111,20 @@ class AssignRoles extends React.Component {
                 leftAvatar={{ source: { uri: l.avatar_url } }}
                 title={l.name}
                 subtitle={l.subtitle}
-                disabled={true}
                 rightSubtitle={l.approvalStatus}
                 bottomDivider
+                onPress={() => {
+                  this.props.navigation.navigate("AssignRoleDetail", {
+                    profile: l,
+                    accept: this.handleAccept,
+                    reject: this.handleReject,
+                  });
+                }}
               />
             ))}
           </React.Fragment>
         ) : null}
-      </View>
+      </ScrollView>
     );
   }
 }

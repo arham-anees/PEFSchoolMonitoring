@@ -1,4 +1,3 @@
-<script src="http://localhost:8097"></script>;
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
@@ -7,6 +6,7 @@ import ActivityIndicatorModal from "../../Components/ActivityIndicatorModal";
 
 function AssignRoleDetail(props) {
   let [show, setShow] = useState(false);
+  console.log(props);
   return (
     <View style={Styles.container}>
       <View>
@@ -27,6 +27,16 @@ function AssignRoleDetail(props) {
       <View style={Styles.justifyBetween}>
         <Text style={Styles.label}>Role</Text>
         <Text style={Styles.value}>{props.route.params.profile.roleName}</Text>
+      </View>
+      <View style={Styles.justifyBetween}>
+        <Text style={Styles.label}>Service Number</Text>
+        <Text style={Styles.value}>
+          {props.route.params.profile.serviceNumber}
+        </Text>
+      </View>
+      <View style={Styles.justifyBetween}>
+        <Text style={Styles.label}>CNIC</Text>
+        <Text style={Styles.value}>{props.route.params.profile.cnic}</Text>
       </View>
       <View style={Styles.justifyBetween}>
         <Button
@@ -67,9 +77,9 @@ const Styles = StyleSheet.create({
     marginVertical: 20,
   },
   label: {
-    minWidth: "30%",
+    minWidth: "40%",
   },
   value: {
-    width: "70%",
+    width: "60%",
   },
 });

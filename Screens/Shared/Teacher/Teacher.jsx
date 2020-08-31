@@ -63,12 +63,12 @@ class Teacher extends React.Component {
           <Text style={styles.inputLabel}>Joining Date</Text>
           <TextInput
             style={styles.textInput}
-            value={this.state.teacher.joiningDate}
+            value={Date(this.state.teacher.joiningDate)}
             onChangeText={(text) => {
               this.state.teacher.joiningDate = text;
               this.setState(this.state.teacher);
             }}
-            editable={this.state.enable}
+            editable={false}
           />
         </View>
         <CheckBox
@@ -116,6 +116,7 @@ class Teacher extends React.Component {
                   style={[styles.textInput, styles.qualificationInput]}
                   editable={this.state.enable}
                   value={this.state.newQualification.name}
+                  placeholder={"Qualification"}
                   onChangeText={(text) => {
                     this.state.newQualification.name = text;
                     this.setState(this.state.newQualification);
@@ -125,6 +126,7 @@ class Teacher extends React.Component {
                   style={[styles.textInput, styles.qualificationInput]}
                   editable={this.state.enable}
                   value={this.state.newQualification.institute}
+                  placeholder={"Institute"}
                   onChangeText={(text) => {
                     this.state.newQualification.institute = text;
                     this.setState(this.state.newQualification);
@@ -134,6 +136,7 @@ class Teacher extends React.Component {
                   style={[styles.textInput, styles.qualificationInput]}
                   keyboardType={"number-pad"}
                   editable={this.state.enable}
+                  placeholder={"Year Completion"}
                   value={this.state.newQualification.qualificationInput}
                   onChangeText={(text) => {
                     this.state.newQualification.yearOfCompletion = text;
@@ -144,6 +147,7 @@ class Teacher extends React.Component {
               <Button
                 title={"Add Qualification"}
                 type={"outline"}
+                style={{ marginTop: 10, marginHorizontal: 10 }}
                 onPress={() => {
                   const newQualification = { ...this.state.newQualification };
                   let teacher = { ...this.state.teacher };
@@ -161,6 +165,7 @@ class Teacher extends React.Component {
               <Button
                 title={"Submit"}
                 type={"solid"}
+                style={{ marginTop: 10, marginHorizontal: 10 }}
                 onPress={() => {
                   this.props.route.params.updateTeacher(this.state.teacher);
                   this.props.navigation.pop();

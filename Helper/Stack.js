@@ -37,7 +37,9 @@ const withLogOut = {
   headerRight: () => (
     <Button
       icon={<Icon name="sign-out" size={30} color="blue" />}
-      onPress={() => SignOut()}
+      onPress={(e) => {
+        SignOut();
+      }}
       type={"clear"}
     />
   ),

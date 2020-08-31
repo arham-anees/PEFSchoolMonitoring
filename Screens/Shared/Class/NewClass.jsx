@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  ActivityIndicator,
-} from "react-native";
+import { View, StyleSheet, Text, TextInput } from "react-native";
 import { Button } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
 
 class NewClass extends React.Component {
   constructor(props) {
@@ -39,7 +34,7 @@ class NewClass extends React.Component {
           parseInt(s.dropoutStudents)
       ) {
         this.props.route.params.addClass(this.state.class)
-          ? this.props.navigation.pop()
+          ? null //this.props.navigation.pop()
           : alert("Failed to add class");
       } else {
         alert(
@@ -52,17 +47,20 @@ class NewClass extends React.Component {
   };
 
   render() {
+    let _class = this.state.class;
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={[styles.wrapper, styles.inputWrapper]}>
           <Text style={styles.inputLabel}>Grade</Text>
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.grade}
+            value={_class.grade.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.grade = parseInt(text);
+              text == ""
+                ? (_class.grade = "")
+                : (this.state.class.grade = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -71,11 +69,12 @@ class NewClass extends React.Component {
           <Text style={styles.inputLabel}>Section</Text>
           <TextInput
             style={styles.textInput}
-            keyboardType={"number-pad"}
             value={this.state.class.section}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.section = text;
+              text == ""
+                ? (_class.section = "")
+                : (this.state.class.section = text);
               this.setState(this.state.class);
             }}
           />
@@ -85,10 +84,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.totalEnrollment}
+            value={this.state.class.totalEnrollment.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.totalEnrollment = parseInt(text);
+              text == ""
+                ? (_class.totalEnrollment = "")
+                : (this.state.class.totalEnrollment = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -98,10 +99,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.activeStudents}
+            value={this.state.class.activeStudents.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.activeStudents = parseInt(text);
+              text == ""
+                ? (_class.activeStudents = "")
+                : (this.state.class.activeStudents = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -111,10 +114,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.disabledStudents}
+            value={this.state.class.disabledStudents.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.disabledStudents = parseInt(text);
+              text == ""
+                ? (_class.disabledStudents = "")
+                : (this.state.class.disabledStudents = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -124,10 +129,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.nonPefStudents}
+            value={this.state.class.nonPefStudents.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.nonPefStudents = parseInt(text);
+              text == ""
+                ? (_class.nonPefStudents = "")
+                : (this.state.class.nonPefStudents = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -137,10 +144,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.unregisteredStudents}
+            value={this.state.class.unregisteredStudents.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.unregisteredStudents = parseInt(text);
+              text == ""
+                ? (_class.unregisteredStudents = "")
+                : (this.state.class.unregisteredStudents = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -151,10 +160,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.dropoutStudents}
+            value={this.state.class.dropoutStudents.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.dropoutStudents = parseInt(text);
+              text == ""
+                ? (_class.dropoutStudents = "")
+                : (this.state.class.dropoutStudents = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -164,10 +175,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.uniformlessStudents}
+            value={this.state.class.uniformlessStudents.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.uniformlessStudents = parseInt(text);
+              text == ""
+                ? (_class.uniformlessStudents = "")
+                : (this.state.class.uniformlessStudents = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -178,10 +191,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.classroomCapacity}
+            value={this.state.class.classroomCapacity.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.classroomCapacity = parseInt(text);
+              text == ""
+                ? (_class.classroomCapacity = "")
+                : (this.state.class.classroomCapacity = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -191,10 +206,12 @@ class NewClass extends React.Component {
           <TextInput
             style={styles.textInput}
             keyboardType={"number-pad"}
-            value={this.state.class.noOfFurniture}
+            value={this.state.class.noOfFurniture.toString()}
             editable={this.state.editable}
             onChangeText={(text) => {
-              this.state.class.noOfFurniture = parseInt(text);
+              text == ""
+                ? (_class.noOfFurniture = "")
+                : (this.state.class.noOfFurniture = parseInt(text));
               this.setState(this.state.class);
             }}
           />
@@ -206,7 +223,7 @@ class NewClass extends React.Component {
           containerStyle={styles.button}
           onPress={this.addClass}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

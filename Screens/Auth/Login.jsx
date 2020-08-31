@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -41,8 +41,8 @@ import { SignInWithEmailAndPassword, GetRole } from "../../Services/Auth";
 const Email = (email, password, props) => {
   try {
     SignInWithEmailAndPassword(email, password)
-      .then((res) => {
-        if (res !== null) {
+      .then((response) => {
+        if (response !== null) {
           console.log("point 4", email);
           GetRole(email)
             .then((res) => {
@@ -70,6 +70,13 @@ const Email = (email, password, props) => {
 BackHandler.addEventListener("hardwareBackPress", () => BackHandler.exitApp());
 
 export default function Login(props) {
+  // props.navigation.reset({
+  //   index: 0,
+  //   routes: [{ name: "Login" }],
+  // });
+  BackHandler.addEventListener("hardwareBackPress", () =>
+    BackHandler.exitApp()
+  );
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   return (

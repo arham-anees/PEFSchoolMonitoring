@@ -10,8 +10,9 @@ class NewTeacher extends React.Component {
         name: "",
         cnic: "",
         designation: "",
-        joiningDate: "",
+        joiningDate: new Date(),
         qualification: [],
+        isCpdpTrained: false,
       },
       newQualification: {
         name: "",
@@ -20,7 +21,11 @@ class NewTeacher extends React.Component {
       },
     };
   }
-
+  onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -59,9 +64,18 @@ class NewTeacher extends React.Component {
         </View>
         <View style={[styles.wrapper, styles.inputWrapper]}>
           <Text style={styles.inputLabel}>Joining Date</Text>
+          {/* <DateTimePicker
+            testID="dateTimePicker"
+            value={new Date()}
+            mode={"date"}
+            is24Hour={true}
+            display="default"
+            onChange={this.onChange}
+          /> */}
           <TextInput
             style={styles.textInput}
-            value={this.state.teacher.joiningDate}
+            value={this.state.teacher.joiningDate.toDateString()}
+            editable={false}
             onChangeText={(text) => {
               this.state.teacher.joiningDate = text;
               this.setState(this.state.teacher);
@@ -73,7 +87,7 @@ class NewTeacher extends React.Component {
           checked={this.state.teacher.isCpdpTrained}
           iconRight={true}
           wrapperStyle={styles.wrapper}
-          onChangeText={(text) => {
+          onPress={() => {
             this.state.teacher.isCpdpTrained = !this.state.teacher
               .isCpdpTrained;
             this.setState(this.state.teacher);
@@ -108,6 +122,7 @@ class NewTeacher extends React.Component {
               <TextInput
                 style={[styles.textInput, styles.qualificationInput]}
                 editable={this.state.enable}
+                placeholder="Qualification"
                 value={this.state.newQualification.name}
                 onChangeText={(text) => {
                   this.state.newQualification.name = text;
@@ -117,6 +132,7 @@ class NewTeacher extends React.Component {
               <TextInput
                 style={[styles.textInput, styles.qualificationInput]}
                 editable={this.state.enable}
+                placeholder="Institute"
                 value={this.state.newQualification.institute}
                 onChangeText={(text) => {
                   this.state.newQualification.institute = text;
@@ -127,6 +143,7 @@ class NewTeacher extends React.Component {
                 style={[styles.textInput, styles.qualificationInput]}
                 keyboardType={"number-pad"}
                 editable={this.state.enable}
+                placeholder="Year Completion"
                 value={this.state.newQualification.qualificationInput}
                 onChangeText={(text) => {
                   this.state.newQualification.yearOfCompletion = text;
@@ -137,6 +154,7 @@ class NewTeacher extends React.Component {
             <Button
               title={"Add Qualification"}
               type={"outline"}
+              containerStyle={{ marginTop: 10, marginHorizontal: 10 }}
               onPress={() => {
                 const newQualification = { ...this.state.newQualification };
                 let teacher = { ...this.state.teacher };
@@ -154,6 +172,7 @@ class NewTeacher extends React.Component {
             <Button
               title={"Submit"}
               type={"solid"}
+              containerStyle={{ marginTop: 10, marginHorizontal: 10 }}
               onPress={() => {
                 this.props.route.params.addTeacher(this.state.teacher);
                 this.props.navigation.pop();

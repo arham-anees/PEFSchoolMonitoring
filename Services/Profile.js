@@ -17,8 +17,8 @@ export function SetOrUpdateProfile(profile) {
               ...profile,
               lastModifiedOn: Date.now(),
               isApproved: false,
-              approvedOn: null,
-              approvedBy: null,
+              approvedOn: Date.now(),
+              approvedBy: firebase.auth().currentUser.email,
             })
             .then(() => {
               resolve("Role assigned");

@@ -7,7 +7,7 @@ import { Input, Button } from "react-native-elements";
 import { SetOrUpdateProfile, GetProfile } from "../../Services/Profile";
 import { ToastAndroid } from "react-native";
 
-let handleClick = (name, email, phone, serviceNumber, role) => {
+let handleClick = (name, email, phone, cnic, serviceNumber, role) => {
   if (
     serviceNumber !== undefined &&
     serviceNumber !== null &&
@@ -18,6 +18,7 @@ let handleClick = (name, email, phone, serviceNumber, role) => {
         name,
         email,
         phone,
+        cnic,
         serviceNumber,
         roleName: role,
       })
@@ -25,7 +26,7 @@ let handleClick = (name, email, phone, serviceNumber, role) => {
           console.log("response of creating another user", response);
           alert(
             "Profile is updated, please wait for approval from admin." +
-              "\n You can update your profile until approved"
+              "\nYou can update your profile until approved"
           );
         })
         .catch((err) => {
@@ -45,6 +46,7 @@ function Profile(props) {
   let [name, setName] = useState("");
   let [phone, setPhone] = useState("");
   let [serviceNumber, setServiceNumber] = useState();
+  let [cnic, setcnic] = useState("");
   console.log(email);
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
@@ -74,6 +76,11 @@ function Profile(props) {
       />
       <Input placeholder="Email" disabled={true} value={email} />
       <Input
+        placeholder="CNIC"
+        value={cnic}
+        onChange={(value) => setcnic(value.nativeEvent.text)}
+      />
+      <Input
         placeholder="Phone Number"
         value={phone}
         onChange={(value) => setPhone(value.nativeEvent.text)}
@@ -91,7 +98,9 @@ function Profile(props) {
       <Button
         title="Submit"
         style={styles.button}
-        onPress={() => handleClick(name, email, phone, serviceNumber, role)}
+        onPress={() =>
+          handleClick(name, email, phone, cnic, serviceNumber, role)
+        }
       />
     </View>
   );

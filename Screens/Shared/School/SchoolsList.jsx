@@ -35,9 +35,27 @@ class SchoolsList extends React.Component {
         ) : this.state.schools.length === 0 ? (
           <Text>No school record is found</Text>
         ) : (
-          this.state.schools.map((item, i) =>
-            this.state.schoolId > 0 ? (
-              item.id === this.state.schoolId ? (
+          this.state.schools.map(
+            (item, i) =>
+              this.state.schoolId > 0 ? (
+                item.id === this.state.schoolId ? (
+                  <ListItem
+                    key={i}
+                    title={item.name}
+                    subtitle={Date(item.lastModifiedOn)
+                      .toString()
+                      .substr(0, 24)}
+                    bottomDivider
+                    chevron
+                    onPress={() =>
+                      this.props.navigation.navigate("School", {
+                        school: item,
+                        isMonitor: this.props.route.params.isMonitor,
+                      })
+                    }
+                  />
+                ) : null
+              ) : (
                 <ListItem
                   key={i}
                   title={item.name}
@@ -51,22 +69,8 @@ class SchoolsList extends React.Component {
                     })
                   }
                 />
-              ) : null
-            ) : (
-              <ListItem
-                key={i}
-                title={item.name}
-                subtitle={Date(item.lastModifiedOn).toString().substr(0, 24)}
-                bottomDivider
-                chevron
-                onPress={() =>
-                  this.props.navigation.navigate("School", {
-                    school: item,
-                    isMonitor: this.props.route.params.isMonitor,
-                  })
-                }
-              />
-            )
+              )
+            //null
           )
         )}
       </ScrollView>

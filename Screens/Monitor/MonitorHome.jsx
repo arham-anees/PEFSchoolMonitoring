@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -8,10 +8,22 @@ import {
   FlatList,
   BackHandler,
 } from "react-native";
-import { Input } from "react-native-elements";
 
-BackHandler.addEventListener("hardwareBackPress", () => BackHandler.exitApp());
+// const resetAction = StackActions.reset({
+//   index: 0,
+//   actions: [NavigationActions.navigate({ routeName: "Events" })],
+// });
 function MonitorHome(props) {
+  BackHandler.addEventListener("hardwareBackPress", () =>
+    BackHandler.exitApp()
+  );
+  // this.props.navigation.dispatch(resetAction);
+
+  // props.navigation.reset({
+  //   index: 0,
+  //   routes: [{ name: "MonitorHome" }],
+  // });
+
   let data = [
     {
       id: 1,
