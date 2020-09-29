@@ -63,7 +63,7 @@ class Teacher extends React.Component {
           <Text style={styles.inputLabel}>Joining Date</Text>
           <TextInput
             style={styles.textInput}
-            value={Date(this.state.teacher.joiningDate)}
+            value={Date(this.state.teacher.joiningDate).substring(0, 15)}
             onChangeText={(text) => {
               this.state.teacher.joiningDate = text;
               this.setState(this.state.teacher);
@@ -102,7 +102,9 @@ class Teacher extends React.Component {
                   <TextInput
                     style={[styles.textInput, styles.qualificationInput]}
                     keyboardType={"number-pad"}
-                    value={q.yearOfCompletion}
+                    value={
+                      q.yearOfCompletion ? q.yearOfCompletion.toString() : ""
+                    }
                     editable={this.state.enable}
                   />
                 </View>
@@ -137,7 +139,11 @@ class Teacher extends React.Component {
                   keyboardType={"number-pad"}
                   editable={this.state.enable}
                   placeholder={"Year Completion"}
-                  value={this.state.newQualification.qualificationInput}
+                  value={
+                    this.state.newQualification.qualificationInput
+                      ? this.state.newQualification.qualificationInput
+                      : ""
+                  }
                   onChangeText={(text) => {
                     this.state.newQualification.yearOfCompletion = text;
                     this.setState(this.state.newQualification);

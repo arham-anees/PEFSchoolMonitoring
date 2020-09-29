@@ -35,6 +35,7 @@ class UploadPictures extends React.Component {
     ) {
       alert("Please complete all fields first");
     } else {
+      console.log("checks passed");
       this.setState({ isUploading: true });
       let downloadPath = "";
       const total = this.state.images.length;
@@ -48,52 +49,67 @@ class UploadPictures extends React.Component {
         img.schoolId = this.state.schoolId;
         img.class = this.state.class;
         img.section = this.state.section;
-        var uploadTask = firebase
-          .storage()
-          .ref("images")
-          .child(Date.now().toString())
-          .putString(img.file, "data_url");
-        uploadTask.on(
-          "state_changed",
-          function (snapshot) {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            let progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-          },
-          function (error) {
-            // Handle unsuccessful uploads
-            failed += 1;
-          },
-          function () {
-            uploadTask.snapshot.ref
-              .getDownloadURL()
-              .then((downloadURL) => {
-                console.log("download path ", downloadURL);
-                //remove file
-                img.file = null;
-                img.downloadURL = downloadURL;
-                UploadImage(img).then(() => {
-                  completed += 1;
-                  if (completed + failed === total) {
-                    if (failed === 0)
-                      alert("All pictures successfully uploaded");
-                    else if (completed === 0)
-                      alert("All pictures failed to upload");
-                    else
-                      alert(
-                        completed +
-                          " uploaded successfully while " +
-                          failed +
-                          " failed"
-                      );
-                  }
-                });
-              })
-              .catch(() => (failed += 1));
-          }
-        );
+        debugger;
+        try {
+          var uploadTask = firebase
+            .storage()
+            .ref("images")
+            .child(Date.now().toString())
+            .putString(img.file, "data_url", { contentType: "image/jpg" });
+          uploadTask.on(
+            "state_changed",
+            function (snapshot) {
+              // Observe state change events such as progress, pause, and resume
+              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+              let progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+            },
+            function (error) {
+              // Handle unsuccessful uploads
+              failed += 1;
+              console.log("failed 1");
+            },
+            function () {
+              try {
+                console.log("upload starting");
+                uploadTask.snapshot.ref
+                  .getDownloadURL()
+                  .then((downloadURL) => {
+                    console.log("download path ", downloadURL);
+                    //remove file
+                    img.file = null;
+                    img.downloadURL = downloadURL;
+                    UploadImage(img).then(() => {
+                      completed += 1;
+                      if (completed + failed === total) {
+                        if (failed === 0)
+                          alert("All pictures successfully uploaded");
+                        else if (completed === 0)
+                          alert("All pictures failed to upload");
+                        else
+                          alert(
+                            completed +
+                              " uploaded successfully while " +
+                              failed +
+                              " failed"
+                          );
+                      }
+                    });
+                  })
+                  .catch(() => {
+                    failed += 1;
+                    console.log("failed 2");
+                  });
+              } catch (err) {
+                console.log(err);
+              }
+            }
+          );
+        } catch (err) {
+          console.log(err);
+          alert("failed to upload image. please try again later");
+        }
       });
     }
   };
@@ -143,7 +159,7 @@ class UploadPictures extends React.Component {
             placeholder="Class"
             keyboardType={"number-pad"}
             value={
-              isNaN(this.state.schoolId.toString())
+              isNaN(this.state.class.toString())
                 ? ""
                 : this.state.class.toString()
             }

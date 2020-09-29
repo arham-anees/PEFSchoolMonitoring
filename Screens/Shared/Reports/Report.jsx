@@ -130,7 +130,7 @@ class Report extends React.Component {
             value={
               this.state.report.noOfWritingBoards === -1
                 ? ""
-                : this.state.report.noOfWritingBoards
+                : this.state.report.noOfWritingBoards.toString()
             }
             onChangeText={(text) => {
               text === ""

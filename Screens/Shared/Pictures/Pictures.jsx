@@ -21,39 +21,58 @@ class Pictures extends React.Component {
         {this.state.pictures.length === 0 ? (
           <Text>No Picture Found</Text>
         ) : (
-          <View>
+          <View style={{ paddingBottom: 50 }}>
             <Input
               label="School"
               disabled={true}
-              value={this.props.route.params.schoolId}
+              value={
+                this.props.route.params.schoolId
+                  ? this.props.route.params.schoolId.toString()
+                  : ""
+              }
             />
             <Input
-              label="School"
+              label="Class"
               disabled={true}
-              value={this.props.route.params.schoolId}
+              value={
+                this.props.route.params.grade
+                  ? this.props.route.params.grade.toString()
+                  : ""
+              }
             />
             <Input
-              label="School"
+              label="Section"
               disabled={true}
-              value={this.props.route.params.schoolId}
+              value={
+                this.props.route.params.section
+                  ? this.props.route.params.section.toString()
+                  : ""
+              }
             />
             {this.state.pictures.map((img, i) =>
-              img.schoolId === this.props.schoolId &&
-              img.grade === this.props.grade &&
-              img.section === this.props.section ? (
-                <View>
+              img.schoolId === this.props.route.params.schoolId &&
+              img.class === this.props.route.params.grade &&
+              img.section === this.props.route.params.section ? (
+                <View key={i}>
                   <Image
-                    key={i}
-                    source={{ uri: img.downloadURL }}
                     style={{
-                      height: Math.round(Dimensions.get("window").height - 30),
+                      height: Math.round(200),
                       width: Math.round(Dimensions.get("window").width),
                       margin: 5,
-                      resizeMode: "contain",
                     }}
+                    resizeMode={"cover"}
+                    source={{ uri: img.downloadURL }}
                   />
                   <Text>{img.lastModifiedBy}</Text>
-                  <Text>{Date(img.lastModifiedOn)}</Text>
+                  <Text
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {Date(img.lastModifiedOn).toString().substring(0, 24)}
+                  </Text>
                 </View>
               ) : null
             )}

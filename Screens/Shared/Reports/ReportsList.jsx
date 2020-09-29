@@ -49,7 +49,10 @@ class ReportsList extends React.Component {
               </Text>
             </View>
             {this.state.reports
-              .sort((a, b) => a.lastModifiedOn - b.lastModifiedOn)
+              .sort((a, b) => {
+                console.log(a.lastModifiedOn, b.lastModifiedOn);
+                return -a.record.lastModifiedOn + b.record.lastModifiedOn;
+              })
               .map((report) => (
                 <React.Fragment key={report.id}>
                   <ListItem
