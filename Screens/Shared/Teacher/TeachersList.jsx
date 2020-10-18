@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { ListItem, Button } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -19,25 +19,31 @@ class TeachersList extends React.Component {
   };
   render() {
     return (
-      <ScrollView>
-        {this.state.teachersList.map((teacher, i) => {
-          return (
-            <ListItem
-              key={i}
-              title={teacher.name}
-              subtitle={teacher.designation}
-              bottomDivider
-              chevron
-              onPress={() =>
-                this.props.navigation.navigate("Teacher", {
-                  teacher,
-                  editable: this.state.editable,
-                  updateTeacher: this.props.route.params.updateTeacher,
-                })
-              }
-            />
-          );
-        })}
+      <ScrollView style={{ marginHorizontal: 10 }}>
+        {!this.state.teachersList != undefined ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            No Teacher Added
+          </Text>
+        ) : (
+          this.state.teachersList.map((teacher, i) => {
+            return (
+              <ListItem
+                key={i}
+                title={teacher.name}
+                subtitle={teacher.designation}
+                bottomDivider
+                chevron
+                onPress={() =>
+                  this.props.navigation.navigate("Teacher", {
+                    teacher,
+                    editable: this.state.editable,
+                    updateTeacher: this.props.route.params.updateTeacher,
+                  })
+                }
+              />
+            );
+          })
+        )}
         {this.state.editable ? (
           <Button
             title={"New Teacher"}

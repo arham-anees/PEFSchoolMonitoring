@@ -166,168 +166,170 @@ class School extends React.Component {
   render() {
     console.log(this.state.school.rating);
     return (
-      <ScrollView>
-        <CheckBox
-          title="Overcrowded"
-          checked={this.state.school.isOvercrowded}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={this.toggleIsOvercrowded}
-        />
-        <CheckBox
-          title="Congested"
-          checked={this.state.school.isCongested}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleIsCongested()}
-        />
-        <CheckBox
-          title="Artificial Light"
-          checked={this.state.school.isLightArtificial}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleIsLightArtificial()}
-        />
-        <CheckBox
-          title="Plaster Required"
-          checked={this.state.school.isPlasteringRequired}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleIsPlasteringRequired()}
-        />
-        <CheckBox
-          title="Proper Rooms Condition"
-          checked={this.state.school.isRoomsConditionProper}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleIsRoomsConditionProper()}
-        />
-        <CheckBox
-          title="Charging Students"
-          checked={this.state.school.isStudentCharged}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleIsStudentCharged()}
-        />
-        <CheckBox
-          title="Proper Furniture"
-          checked={this.state.school.isFurnitureProper}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleIsFurnitureProper()}
-        />
-        <CheckBox
-          title="Ventilated Rooms"
-          checked={this.state.school.areRoomsVentilated}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleAreRoomsVentilated()}
-        />
-        <CheckBox
-          title="Paid Teachers"
-          checked={this.state.school.areTeachersPaid}
-          iconRight={true}
-          wrapperStyle={styles.wrapper}
-          onPress={() => this.toggleAreTeachersPaid()}
-        />
+      <View>
+        <ScrollView style={{ marginBottom: 50 }}>
+          <CheckBox
+            title="Overcrowded"
+            checked={this.state.school.isOvercrowded}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={this.toggleIsOvercrowded}
+          />
+          <CheckBox
+            title="Congested"
+            checked={this.state.school.isCongested}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleIsCongested()}
+          />
+          <CheckBox
+            title="Artificial Light"
+            checked={this.state.school.isLightArtificial}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleIsLightArtificial()}
+          />
+          <CheckBox
+            title="Plaster Required"
+            checked={this.state.school.isPlasteringRequired}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleIsPlasteringRequired()}
+          />
+          <CheckBox
+            title="Proper Rooms Condition"
+            checked={this.state.school.isRoomsConditionProper}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleIsRoomsConditionProper()}
+          />
+          <CheckBox
+            title="Charging Students"
+            checked={this.state.school.isStudentCharged}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleIsStudentCharged()}
+          />
+          <CheckBox
+            title="Proper Furniture"
+            checked={this.state.school.isFurnitureProper}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleIsFurnitureProper()}
+          />
+          <CheckBox
+            title="Ventilated Rooms"
+            checked={this.state.school.areRoomsVentilated}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleAreRoomsVentilated()}
+          />
+          <CheckBox
+            title="Paid Teachers"
+            checked={this.state.school.areTeachersPaid}
+            iconRight={true}
+            wrapperStyle={styles.wrapper}
+            onPress={() => this.toggleAreTeachersPaid()}
+          />
 
-        <View style={[styles.wrapper, styles.inputWrapper]}>
-          <Text style={styles.inputLabel}>No of Writing Boards</Text>
-          <TextInput
-            style={styles.textInput}
-            keyboardType={"number-pad"}
-            editable={this.state.editable}
-            value={
-              this.state.school.noOfWritingBoards === -1
-                ? ""
-                : this.state.school.noOfWritingBoards.toString()
-            }
-            onChangeText={(text) => {
-              text === ""
-                ? (this.state.school.noOfWritingBoards = -1)
-                : (this.state.school.noOfWritingBoards = parseInt(text));
-              this.setState({ school: this.state.school });
-            }}
-          />
-        </View>
-        <View style={[styles.wrapper, styles.inputWrapper]}>
-          <Text style={styles.inputLabel}>No of Proper Fans</Text>
-          <TextInput
-            style={styles.textInput}
-            keyboardType={"number-pad"}
-            editable={this.state.editable}
-            value={
-              this.state.school.noOfProperFans === -1
-                ? ""
-                : this.state.school.noOfProperFans.toString()
-            }
-            onChangeText={(text) => {
-              text === ""
-                ? (this.state.school.noOfProperFans = -1)
-                : (this.state.school.noOfProperFans = parseInt(text));
-              this.setState({ school: this.state.school });
-            }}
-          />
-        </View>
-        <View style={[styles.wrapper, styles.inputWrapper]}>
-          <Text style={styles.inputLabel}>No of Teacher Chairs</Text>
-          <TextInput
-            style={styles.textInput}
-            keyboardType={"number-pad"}
-            editable={this.state.editable}
-            value={
-              this.state.school.noOfTeacherChairs === -1
-                ? ""
-                : this.state.school.noOfTeacherChairs.toString()
-            }
-            onChangeText={(text) => {
-              text === ""
-                ? (this.state.school.noOfTeacherChairs = -1)
-                : (this.state.school.noOfTeacherChairs = parseInt(text));
-              this.setState({ school: this.state.school });
-            }}
-          />
-        </View>
-        <View style={{ paddingHorizontal: 20 }}>
-          <Button
-            title={"Classes"}
-            type={"outline"}
-            containerStyle={styles.marginTop10}
-            onPress={() =>
-              this.props.navigation.navigate("ClassesList", {
-                classes: this.state.school.classes,
-                editable: this.state.editable,
-                updateClass: this.updateClass,
-                addClass: this.addClass,
-              })
-            }
-          />
-          <Button
-            title={"Teachers"}
-            type={"outline"}
-            onPress={() =>
-              this.props.navigation.navigate("TeachersList", {
-                teachers: this.state.school.teachers,
-                updateTeacher: this.updateTeacher,
-                editable: this.state.editable,
-              })
-            }
-            containerStyle={styles.marginTop10}
-          />
-          {this.state.isMonitor ? (
-            <Button
-              title={this.state.editable ? "Save Report" : "Start Monitoring"}
-              type={"solid"}
-              onPress={() =>
-                this.state.editable
-                  ? this.handleClick(this.state.school)
-                  : this.setState({ editable: !this.state.editable })
+          <View style={[styles.wrapper, styles.inputWrapper]}>
+            <Text style={styles.inputLabel}>No of Writing Boards</Text>
+            <TextInput
+              style={styles.textInput}
+              keyboardType={"number-pad"}
+              editable={this.state.editable}
+              value={
+                this.state.school.noOfWritingBoards === -1
+                  ? ""
+                  : this.state.school.noOfWritingBoards.toString()
               }
-              containerStyle={{ marginTop: 10, marginBottom: 20 }}
+              onChangeText={(text) => {
+                text === ""
+                  ? (this.state.school.noOfWritingBoards = -1)
+                  : (this.state.school.noOfWritingBoards = parseInt(text));
+                this.setState({ school: this.state.school });
+              }}
             />
-          ) : null}
-        </View>
-      </ScrollView>
+          </View>
+          <View style={[styles.wrapper, styles.inputWrapper]}>
+            <Text style={styles.inputLabel}>No of Proper Fans</Text>
+            <TextInput
+              style={styles.textInput}
+              keyboardType={"number-pad"}
+              editable={this.state.editable}
+              value={
+                this.state.school.noOfProperFans === -1
+                  ? ""
+                  : this.state.school.noOfProperFans.toString()
+              }
+              onChangeText={(text) => {
+                text === ""
+                  ? (this.state.school.noOfProperFans = -1)
+                  : (this.state.school.noOfProperFans = parseInt(text));
+                this.setState({ school: this.state.school });
+              }}
+            />
+          </View>
+          <View style={[styles.wrapper, styles.inputWrapper]}>
+            <Text style={styles.inputLabel}>No of Teacher Chairs</Text>
+            <TextInput
+              style={styles.textInput}
+              keyboardType={"number-pad"}
+              editable={this.state.editable}
+              value={
+                this.state.school.noOfTeacherChairs === -1
+                  ? ""
+                  : this.state.school.noOfTeacherChairs.toString()
+              }
+              onChangeText={(text) => {
+                text === ""
+                  ? (this.state.school.noOfTeacherChairs = -1)
+                  : (this.state.school.noOfTeacherChairs = parseInt(text));
+                this.setState({ school: this.state.school });
+              }}
+            />
+          </View>
+          <View style={{ paddingHorizontal: 20 }}>
+            <Button
+              title={"Classes"}
+              type={"outline"}
+              containerStyle={styles.marginTop10}
+              onPress={() =>
+                this.props.navigation.navigate("ClassesList", {
+                  classes: this.state.school.classes,
+                  editable: this.state.editable,
+                  updateClass: this.updateClass,
+                  addClass: this.addClass,
+                })
+              }
+            />
+            <Button
+              title={"Teachers"}
+              type={"outline"}
+              onPress={() =>
+                this.props.navigation.navigate("TeachersList", {
+                  teachers: this.state.school.teachers,
+                  updateTeacher: this.updateTeacher,
+                  editable: this.state.editable,
+                })
+              }
+              containerStyle={styles.marginTop10}
+            />
+            {this.state.isMonitor ? (
+              <Button
+                title={this.state.editable ? "Save Report" : "Start Monitoring"}
+                type={"solid"}
+                onPress={() =>
+                  this.state.editable
+                    ? this.handleClick(this.state.school)
+                    : this.setState({ editable: !this.state.editable })
+                }
+                containerStyle={{ marginTop: 10, marginBottom: 20 }}
+              />
+            ) : null}
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }

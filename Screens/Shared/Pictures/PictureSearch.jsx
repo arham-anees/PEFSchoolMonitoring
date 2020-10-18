@@ -8,7 +8,7 @@ function PictureSearch(props) {
   let [grade, setGrade] = useState(0);
   let [section, setSection] = useState("");
   return (
-    <View>
+    <View style={{ marginHorizontal: 10 }}>
       <Input
         label="School ID"
         placeholder="School ID"
@@ -31,6 +31,7 @@ function PictureSearch(props) {
       />
       <Button
         title={"Search"}
+        style={{ marginHorizontal: 10 }}
         onPress={() =>
           props.navigation.navigate("Pictures", { schoolId, grade, section })
         }

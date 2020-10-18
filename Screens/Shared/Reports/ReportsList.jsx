@@ -22,11 +22,13 @@ class ReportsList extends React.Component {
   }
   render() {
     return (
-      <ScrollView style={{ marginBottom: 20 }}>
+      <ScrollView style={{ marginBottom: 20, marginHorizontal: 10 }}>
         {this.state.isLoading ? (
           <ActivityIndicator style={{ marginTop: 20 }} />
         ) : this.state.reports === null || this.state.reports.length === 0 ? (
-          <Text h4>No report found</Text>
+          <Text h4 style={{ textAlign: "center", marginTop: 20 }}>
+            No report found
+          </Text>
         ) : (
           <React.Fragment>
             <View
