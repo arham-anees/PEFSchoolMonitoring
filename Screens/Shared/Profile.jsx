@@ -98,9 +98,16 @@ function Profile(props) {
       <Button
         title="Submit"
         style={styles.button}
-        onPress={() =>
-          handleClick(name, email, phone, cnic, serviceNumber, role)
-        }
+        onPress={() => {
+          if (cnic.length !== 13) {
+            Alert.alert(
+              "Invalid CNIC",
+              "Please enter valid 13 digit CNIC without dashes"
+            );
+          } else {
+            handleClick(name, email, phone, cnic, serviceNumber, role);
+          }
+        }}
       />
     </View>
   );

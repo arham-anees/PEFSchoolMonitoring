@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { CheckBox, Button } from "react-native-elements";
 class NewTeacher extends React.Component {
@@ -174,8 +174,15 @@ class NewTeacher extends React.Component {
               type={"solid"}
               containerStyle={{ marginTop: 10, marginHorizontal: 10 }}
               onPress={() => {
-                this.props.route.params.addTeacher(this.state.teacher);
-                this.props.navigation.pop();
+                if (this.state.teacher.cnic.length !== 13) {
+                  Alert.alert(
+                    "Invalid CNIC",
+                    "Please enter valid 13 digit CNIC without dashes"
+                  );
+                } else {
+                  this.props.route.params.addTeacher(this.state.teacher);
+                  this.props.navigation.pop();
+                }
               }}
             />
           </View>

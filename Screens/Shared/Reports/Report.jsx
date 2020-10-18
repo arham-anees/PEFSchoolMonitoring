@@ -9,7 +9,7 @@ class Report extends React.Component {
     super(props);
     this.state = {
       report: this.props.route.params.report,
-      editable: false,
+      editable: true,
     };
   }
   handleSubmitPress = () => {
