@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { StyleSheet, Picker } from "react-native";
 import { firebaseAuth } from "../../Services/FirebaseConfig";
 import { Input, Button } from "react-native-elements";
@@ -23,7 +23,7 @@ let handleClick = (name, email, phone, cnic, serviceNumber, role) => {
         roleName: role,
       })
         .then((response) => {
-          console.log("response of creating another user", response);
+          //console.log("response of creating another user", response);
           alert(
             "Profile is updated, please wait for approval from admin." +
               "\nYou can update your profile until approved"
@@ -47,13 +47,13 @@ function Profile(props) {
   let [phone, setPhone] = useState("");
   let [serviceNumber, setServiceNumber] = useState();
   let [cnic, setcnic] = useState("");
-  console.log(email);
+  //console.log(email);
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
       if (user !== null) {
         GetProfile(email)
           .then((_profile) => {
-            console.log(_profile);
+            //console.log(_profile);
             setName(_profile.name);
             setRole(_profile.roleName);
             setPhone(_profile.phone);

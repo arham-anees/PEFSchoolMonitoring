@@ -9,7 +9,7 @@ class School extends React.Component {
     super(props);
     this.state = {
       school: this.props.route.params.school,
-      editable: false,
+      editable: true,
       isMonitor: this.props.route.params.isMonitor,
       lastOperation: Date.now(), //this is to prevent double call
     };

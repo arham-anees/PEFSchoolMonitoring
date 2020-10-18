@@ -7,9 +7,10 @@ import { ScrollView } from "react-native-gesture-handler";
 class Report extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.route.params.report);
     this.state = {
       report: this.props.route.params.report,
-      editable: true,
+      editable: false,
     };
   }
   handleSubmitPress = () => {
@@ -23,7 +24,22 @@ class Report extends React.Component {
   getRating = () => {
     return (this.state.report.rating / 9) * 10;
   };
-
+  addClass = (newClass) => {
+    console.log("class is being added");
+    //if (Date.now() - this.state.lastOperation > 1000) {
+    let school = { ...this.state.school };
+    school.classes.push(newClass);
+    this.setState({ school, lastOperation: Date.now() });
+    this.props.navigation.navigate("ClassesList", {
+      classes: this.state.school.classes,
+      editable: this.state.editable,
+      updateClass: this.updateClass,
+      addClass: this.addClass,
+    });
+    return true;
+    //} else console.log("this is double  call");
+    return false;
+  };
   getRemarks = () => {
     const rating = this.getRating();
 

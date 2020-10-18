@@ -20,34 +20,36 @@ function ClassesList(props) {
   // };
   console.log(classesList);
 
-  useEffect(() => {
-    console.log("effective");
-  });
+  // useEffect(() => {
+  //   console.log("effective");
+  // });
 
   return (
     <ScrollView style={{ marginHorizontal: 10 }}>
-      {!classesList != undefined ? (
+      {classesList === undefined || classesList === null ? (
         <Text style={{ textAlign: "center", marginTop: 20 }}>
           No class added
         </Text>
       ) : (
         classesList.map((_class, i) => {
-          return (
-            <ListItem
-              key={i}
-              title={"Class " + _class.grade}
-              subtitle={"Section " + _class.section}
-              bottomDivider
-              chevron
-              onPress={() =>
-                props.navigation.navigate("Class", {
-                  class: _class,
-                  editable,
-                  updateClass,
-                })
-              }
-            />
-          );
+          if (_class === null) return null;
+          else
+            return (
+              <ListItem
+                key={i}
+                title={"Class " + _class.grade}
+                subtitle={"Section " + _class.section}
+                bottomDivider
+                chevron
+                onPress={() =>
+                  props.navigation.navigate("Class", {
+                    class: _class,
+                    editable,
+                    updateClass,
+                  })
+                }
+              />
+            );
         })
       )}
       {editable ? (
