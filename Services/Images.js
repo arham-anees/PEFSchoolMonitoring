@@ -5,6 +5,8 @@ import CollectionNames from "./CollectionNames";
 export function UploadImage(obj) {
   return new Promise((resolve, reject) => {
     try {
+      obj.blob = null;
+      console.log(obj);
       firebase
         .firestore()
         .collection(CollectionNames.Images)
@@ -13,7 +15,10 @@ export function UploadImage(obj) {
           console.log(res);
           resolve(res);
         })
-        .catch((err) => reject(err));
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
     } catch (err) {
       reject(err);
     }

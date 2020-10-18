@@ -26,6 +26,27 @@ class UploadPictures extends React.Component {
       processed: 0,
     };
   }
+
+  uriToBlob = (uri) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        // return the blob
+        resolve(xhr.response);
+      };
+
+      xhr.onerror = function () {
+        // something went wrong
+        reject(new Error("uriToBlob failed"));
+      };
+      // this helps us get a blob
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+
+      xhr.send(null);
+    });
+  };
+
   handleUpload = () => {
     if (
       this.state.class < 1 ||
@@ -49,13 +70,18 @@ class UploadPictures extends React.Component {
         img.schoolId = this.state.schoolId;
         img.class = this.state.class;
         img.section = this.state.section;
-        debugger;
+        //debugger;
         try {
           var uploadTask = firebase
             .storage()
             .ref("images")
-            .child(Date.now().toString())
-            .putString(img.file, "data_url", { contentType: "image/jpg" });
+            .child(Date.now().toString() + ".jpg")
+            .put(img.blob, { contentType: "image/jpeg" });
+          // firebase
+          //   .storage()
+          //   .ref("images")
+          //   .child(Date.now().toString())
+          //   .putString(img.file);
           uploadTask.on(
             "state_changed",
             function (snapshot) {
@@ -79,6 +105,7 @@ class UploadPictures extends React.Component {
                     console.log("download path ", downloadURL);
                     //remove file
                     img.file = null;
+                    img.blob = null;
                     img.downloadURL = downloadURL;
                     UploadImage(img).then(() => {
                       completed += 1;
@@ -130,6 +157,9 @@ class UploadPictures extends React.Component {
           newImage.downloadURL = null;
           newImage.width = res.width;
           newImage.height = res.height;
+          this.uriToBlob(res.uri)
+            .then((result) => (newImage.blob = result))
+            .catch((err) => (newImage.blob = undefined));
           //newImage.base64 = res.base64;
           this.setState({ images: [...this.state.images, newImage] });
         }
@@ -201,6 +231,7 @@ class UploadPictures extends React.Component {
           />
         ) : (
           <Button
+            style={{ marginHorizontal: 10 }}
             onPress={this._pickImage}
             title={"Select Image"}
             type={"outline"}

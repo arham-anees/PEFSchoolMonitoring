@@ -2,15 +2,15 @@ import * as firebase from "firebase";
 
 //export function InitFirebase() {
 const firebaseConfig = {
-  apiKey: "AIzaSyBFPmAiRnX6_a6pUSV2Gansh20DcwB25LQ",
-  authDomain: "pefschoolmonitoring.firebaseapp.com",
-  databaseURL: "https://pefschoolmonitoring.firebaseio.com",
-  projectId: "pefschoolmonitoring",
-  storageBucket: "pefschoolmonitoring.appspot.com",
-  messagingSenderId: "1012321083324",
-  appId: "1:1012321083324:web:9c18dbe078c66ef93195b9",
+  apiKey: "AIzaSyAimOB-d5rpRRNcyHlkJkGZ6t8OPT4AiOM",
+  authDomain: "pef-school-monitoring.firebaseapp.com",
+  databaseURL: "https://pef-school-monitoring.firebaseio.com",
+  projectId: "pef-school-monitoring",
+  storageBucket: "pef-school-monitoring.appspot.com",
+  messagingSenderId: "577243383811",
+  appId: "1:577243383811:web:df5a8967a2609e3e632636",
+  measurementId: "G-S1WFR58R1Q",
 };
-
 try {
   var firebaseApp = firebase.initializeApp(firebaseConfig);
 } catch (err) {

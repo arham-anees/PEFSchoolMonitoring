@@ -13,12 +13,13 @@ class Pictures extends React.Component {
     let p = this.props.route.params;
     GetImages(p.schoolId, p.grade, p.section).then((res) => {
       this.setState({ pictures: res });
+      console.log(res);
     });
   }
   render() {
     return (
-      <ScrollView>
-        {this.state.pictures.length === 0 ? (
+      <ScrollView style={{ marginHorizontal: 10 }}>
+        {this.state.pictures === null || this.state.pictures.length === 0 ? (
           <Text>No Picture Found</Text>
         ) : (
           <View style={{ paddingBottom: 50 }}>
@@ -63,12 +64,15 @@ class Pictures extends React.Component {
                     resizeMode={"cover"}
                     source={{ uri: img.downloadURL }}
                   />
-                  <Text>{img.lastModifiedBy}</Text>
+                  {/* <Text style={{ textAlign: "center" }}>
+                    {img.lastModifiedBy} yes
+                  </Text> */}
                   <Text
                     style={{
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "center",
+                      textAlign: "center",
                     }}
                   >
                     {Date(img.lastModifiedOn).toString().substring(0, 24)}
