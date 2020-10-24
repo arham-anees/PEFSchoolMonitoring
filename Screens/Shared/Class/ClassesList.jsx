@@ -18,7 +18,7 @@ function ClassesList(props) {
   //   //} else console.log("this is double  call");
   //   //return false;
   // };
-  console.log(classesList);
+  //console.log(classesList);
 
   // useEffect(() => {
   //   console.log("effective");

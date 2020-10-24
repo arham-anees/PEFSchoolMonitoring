@@ -2,6 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { CheckBox, Button } from "react-native-elements";
+import {
+  isNameValid,
+  isQualificationValid,
+  isYearValid,
+} from "../../../Helper/Helper";
 class Teacher extends React.Component {
   constructor(props) {
     super(props);
@@ -120,8 +125,12 @@ class Teacher extends React.Component {
                   value={this.state.newQualification.name}
                   placeholder={"Qualification"}
                   onChangeText={(text) => {
-                    this.state.newQualification.name = text;
-                    this.setState(this.state.newQualification);
+                    if (isQualificationValid(text)) {
+                      this.state.newQualification.name = text;
+                      this.setState(this.state.newQualification);
+                    } else {
+                      alert("Please enter valid qualification");
+                    }
                   }}
                 />
                 <TextInput
@@ -130,8 +139,12 @@ class Teacher extends React.Component {
                   value={this.state.newQualification.institute}
                   placeholder={"Institute"}
                   onChangeText={(text) => {
-                    this.state.newQualification.institute = text;
-                    this.setState(this.state.newQualification);
+                    if (isNameValid(text)) {
+                      this.state.newQualification.institute = text;
+                      this.setState(this.state.newQualification);
+                    } else {
+                      alert("Please enter valid Institute name");
+                    }
                   }}
                 />
                 <TextInput
@@ -148,6 +161,16 @@ class Teacher extends React.Component {
                     this.state.newQualification.yearOfCompletion = text;
                     this.setState(this.state.newQualification);
                   }}
+                  onBlur={() => {
+                    if (
+                      !isYearValid(this.state.newQualification.yearOfCompletion)
+                    ) {
+                      newQualification = this.state.newQualification;
+                      newQualification.yearOfCompletion = "";
+                      this.setState(newQualification);
+                      alert("Please insert valid year");
+                    }
+                  }}
                 />
               </View>
               <Button
@@ -155,17 +178,27 @@ class Teacher extends React.Component {
                 type={"outline"}
                 style={{ marginTop: 10, marginHorizontal: 10 }}
                 onPress={() => {
-                  const newQualification = { ...this.state.newQualification };
-                  let teacher = { ...this.state.teacher };
-                  teacher.qualification.push(newQualification);
-                  this.setState({
-                    teacher,
-                    newQualification: {
-                      name: "",
-                      institute: "",
-                      yearOfCompletion: "",
-                    },
-                  });
+                  if (
+                    isYearValid(this.state.newQualification.yearOfCompletion) &&
+                    isNameValid(this.state.newQualification.institute) &&
+                    isQualificationValid(this.state.newQualification.name)
+                  ) {
+                    const newQualification = { ...this.state.newQualification };
+                    let teacher = { ...this.state.teacher };
+                    teacher.qualification.push(newQualification);
+                    this.setState({
+                      teacher,
+                      newQualification: {
+                        name: "",
+                        institute: "",
+                        yearOfCompletion: "",
+                      },
+                    });
+                  } else {
+                    alert(
+                      "Some values are invalid. Please enter valid values and try again"
+                    );
+                  }
                 }}
               />
               <Button
