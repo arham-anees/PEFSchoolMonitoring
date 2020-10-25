@@ -10,10 +10,12 @@ import {
 import { CreateUserWithEmailAndPassword } from "../../Services/Auth";
 import { Button } from "react-native-elements";
 import styles from "./Style";
+import { isPasswordValid } from "../../Helper/Helper";
 
 export default function SignUp(props) {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+  let [confirmPassword, setConfirmPassword] = useState("");
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -46,7 +48,37 @@ export default function SignUp(props) {
             placeholder="Password"
             secureTextEntry={true}
             underlineColorAndroid="transparent"
-            onChangeText={(value) => setPassword(value)}
+            onChangeText={(value) => {
+              if (isPasswordValid(value)) {
+                setPassword(value);
+              } else {
+                alert(
+                  "Please insert valid password. A valid password only contains at least one small alphabet, one capital, one number and one special character(@ . -)"
+                );
+              }
+            }}
+          />
+          <Image
+            style={styles.inputIcon}
+            source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Confirm Password"
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            onChangeText={(value) => {
+              if (isPasswordValid(value)) {
+                setConfirmPassword(value);
+              } else {
+                alert(
+                  "Please insert valid password. A valid password only contains at least one small alphabet, one capital, one number and one special character(@ . -)"
+                );
+              }
+            }}
           />
           <Image
             style={styles.inputIcon}
@@ -57,7 +89,15 @@ export default function SignUp(props) {
         <Button
           title="Sign Up"
           buttonStyle={styles.buttonContainer}
-          onPress={() => CreateUserWithEmailAndPassword(email, password)}
+          onPress={() => {
+            if (password === confirmPassword) {
+              CreateUserWithEmailAndPassword(email, password);
+            } else {
+              alert(
+                "Password are not identical. Please insert identical passwords."
+              );
+            }
+          }}
           type={"outline"}
         />
         {/* <TouchableOpacity

@@ -61,3 +61,14 @@ export function isNameValid(institute) {
   } catch {}
   return false;
 }
+
+export function isPasswordValid(password) {
+  try {
+    let reg = password.match(/.*[a-zA-Z0-9@.-]/);
+    if (reg == null) return false;
+    if (reg[0] === reg.input) return true;
+  } catch {
+    return false;
+  }
+  return false;
+}

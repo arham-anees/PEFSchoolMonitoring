@@ -6,37 +6,48 @@ import { Input, Button } from "react-native-elements";
 
 import { SetOrUpdateProfile, GetProfile } from "../../Services/Profile";
 import { ToastAndroid } from "react-native";
+import {
+  isCnic,
+  isEmailValid,
+  isNameValid,
+  isPhoneValid,
+  isServiceNumberValid,
+} from "../../Helper/Helper";
 
 let handleClick = (name, email, phone, cnic, serviceNumber, role) => {
   if (
-    serviceNumber !== undefined &&
-    serviceNumber !== null &&
-    serviceNumber !== ""
-  )
-    try {
-      SetOrUpdateProfile({
-        name,
-        email,
-        phone,
-        cnic,
-        serviceNumber,
-        roleName: role,
-      })
-        .then((response) => {
-          //console.log("response of creating another user", response);
-          alert(
-            "Profile is updated, please wait for approval from admin." +
-              "\nYou can update your profile until approved"
-          );
+    isNameValid(name) &&
+    isEmailValid(email) &&
+    isPhoneValid(phone) &&
+    isCnic(cnic) &&
+    isServiceNumberValid(serviceNumber)
+  ) {
+    if (role !== "null")
+      try {
+        SetOrUpdateProfile({
+          name,
+          email,
+          phone,
+          cnic,
+          serviceNumber,
+          roleName: role,
         })
-        .catch((err) => {
-          console.log("Error in handleClick", err);
-          alert("Error while updating profile");
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  else alert("invalid service number. please enter valid service number");
+          .then((response) => {
+            //console.log("response of creating another user", response);
+            alert(
+              "Profile is updated, please wait for approval from admin." +
+                "\nYou can update your profile until approved"
+            );
+          })
+          .catch((err) => {
+            console.log("Error in handleClick", err);
+            alert("Error while updating profile");
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    else alert("Please select a role.");
+  } else alert("Some values are invalid. Please enter valid values.");
 };
 
 function Profile(props) {
@@ -72,23 +83,42 @@ function Profile(props) {
       <Input
         placeholder="Name"
         value={name}
-        onChange={(value) => setName(value.nativeEvent.text)}
+        onChange={(value) => {
+          if (isNameValid(value)) {
+            setName(value.nativeEvent.text);
+          } else {
+            alert("Please enter a valid name");
+          }
+        }}
       />
       <Input placeholder="Email" disabled={true} value={email} />
       <Input
         placeholder="CNIC"
         value={cnic}
-        onChange={(value) => setcnic(value.nativeEvent.text)}
+        onChange={(value) => {
+          if (isCnic(value)) {
+            setcnic(value.nativeEvent.text);
+          } else {
+            alert("Please enter valid CNIC with dashes");
+          }
+        }}
       />
       <Input
         placeholder="Phone Number"
         value={phone}
-        onChange={(value) => setPhone(value.nativeEvent.text)}
+        onChange={(value) => {
+          if (isPhoneValid(value)) setPhone(value.nativeEvent.text);
+          else alert("Please enter valid phone number");
+        }}
       />
       <Input
         placeholder="Service Number"
         value={serviceNumber}
-        onChange={(value) => setServiceNumber(value.nativeEvent.text)}
+        onChange={(value) => {
+          if (isServiceNumberValid(value))
+            setServiceNumber(value.nativeEvent.text);
+          else alert("Please enter valid service number");
+        }}
       />
       <Picker onValueChange={(value) => setRole(value)} selectedValue={role}>
         <Picker.Item label="Your Role" value="null" />
