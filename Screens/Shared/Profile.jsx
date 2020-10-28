@@ -95,7 +95,7 @@ function Profile(props) {
       <Input
         placeholder="CNIC"
         value={cnic}
-        onChange={(value) => {
+        onBlur={(value) => {
           if (isCnic(value)) {
             setcnic(value.nativeEvent.text);
           } else {
@@ -106,7 +106,7 @@ function Profile(props) {
       <Input
         placeholder="Phone Number"
         value={phone}
-        onChange={(value) => {
+        onBlur={(value) => {
           if (isPhoneValid(value)) setPhone(value.nativeEvent.text);
           else alert("Please enter valid phone number");
         }}
@@ -114,7 +114,7 @@ function Profile(props) {
       <Input
         placeholder="Service Number"
         value={serviceNumber}
-        onChange={(value) => {
+        onBlur={(value) => {
           if (isServiceNumberValid(value))
             setServiceNumber(value.nativeEvent.text);
           else alert("Please enter valid service number");
