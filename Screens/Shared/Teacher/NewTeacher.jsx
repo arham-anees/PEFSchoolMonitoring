@@ -59,12 +59,12 @@ class NewTeacher extends React.Component {
             style={styles.textInput}
             value={this.state.teacher.cnic}
             onChangeText={(text) => {
-              if (isCnic(text)) {
-                this.state.teacher.cnic = text;
-                this.setState(this.state.teacher);
-              } else {
-                alert("Please enter valid CNIC with dashes");
-              }
+              //if (isCnic(text)) {
+              this.state.teacher.cnic = text;
+              this.setState(this.state.teacher);
+              //} else {
+              //  alert("Please enter valid CNIC with dashes");
+              //}
             }}
           />
         </View>
@@ -225,16 +225,30 @@ class NewTeacher extends React.Component {
               type={"solid"}
               containerStyle={{ marginTop: 10, marginHorizontal: 10 }}
               onPress={() => {
-                if (
-                  isCnic(this.state.cnic) &&
-                  isNameValid(this.state.teacher.name) &&
-                  isNameValid(this.state.teacher.designation)
-                ) {
-                  this.props.route.params.addTeacher(this.state.teacher);
-                  this.props.navigation.pop();
-                } else {
-                  Alert.alert("Invalid values", "Please enter valid values");
+                if (!isCnic(this.state.cnic)) {
+                  Alert.alert(
+                    "Invalid CNIC",
+                    "Please enter valid 13 digit cnic with dashes."
+                  );
+                  return;
                 }
+                if (!isNameValid(this.state.teacher.name)) {
+                  Alert.alert(
+                    "Invalid Name",
+                    "Please enter valid teacher name."
+                  );
+                  return;
+                }
+                if (!isNameValid(this.state.teacher.designation)) {
+                  Alert.alert(
+                    "Invalid Designation",
+                    "Please enter valid designation for teacher."
+                  );
+                  return;
+                }
+
+                this.props.route.params.addTeacher(this.state.teacher);
+                this.props.navigation.pop();
               }}
             />
           </View>

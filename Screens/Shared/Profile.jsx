@@ -17,7 +17,6 @@ import {
 let handleClick = (name, email, phone, cnic, serviceNumber, role) => {
   if (
     isNameValid(name) &&
-    isEmailValid(email) &&
     isPhoneValid(phone) &&
     isCnic(cnic) &&
     isServiceNumberValid(serviceNumber)
@@ -82,42 +81,42 @@ function Profile(props) {
     <View style={styles.container}>
       <Input
         placeholder="Name"
-        value={name}
         onChange={(value) => {
-          if (isNameValid(value)) {
-            setName(value.nativeEvent.text);
-          } else {
-            alert("Please enter a valid name");
-          }
+          //if (isNameValid(value)) {
+          setName(value.nativeEvent.text);
+          //} else {
+          // alert("Please enter a valid name");
+          //}
         }}
       />
       <Input placeholder="Email" disabled={true} value={email} />
       <Input
         placeholder="CNIC"
         value={cnic}
-        onBlur={(value) => {
-          if (isCnic(value)) {
-            setcnic(value.nativeEvent.text);
-          } else {
-            alert("Please enter valid CNIC with dashes");
-          }
+        onChange={(value) => {
+          //if (isCnic(value)) {
+          setcnic(value.nativeEvent.text);
+          //} else {
+          //alert("Please enter valid CNIC with dashes");
+          //}
         }}
       />
       <Input
         placeholder="Phone Number"
         value={phone}
-        onBlur={(value) => {
-          if (isPhoneValid(value)) setPhone(value.nativeEvent.text);
-          else alert("Please enter valid phone number");
+        onChange={(value) => {
+          //if (isPhoneValid(value))
+          setPhone(value.nativeEvent.text);
+          //else alert("Please enter valid phone number");
         }}
       />
       <Input
         placeholder="Service Number"
         value={serviceNumber}
-        onBlur={(value) => {
-          if (isServiceNumberValid(value))
-            setServiceNumber(value.nativeEvent.text);
-          else alert("Please enter valid service number");
+        onChange={(value) => {
+          //if (isServiceNumberValid(value))
+          setServiceNumber(value.nativeEvent.text);
+          //else alert("Please enter valid service number");
         }}
       />
       <Picker onValueChange={(value) => setRole(value)} selectedValue={role}>
@@ -129,14 +128,7 @@ function Profile(props) {
         title="Submit"
         style={styles.button}
         onPress={() => {
-          if (cnic.length !== 13) {
-            Alert.alert(
-              "Invalid CNIC",
-              "Please enter valid 13 digit CNIC without dashes"
-            );
-          } else {
-            handleClick(name, email, phone, cnic, serviceNumber, role);
-          }
+          handleClick(name, email, phone, cnic, serviceNumber, role);
         }}
       />
     </View>

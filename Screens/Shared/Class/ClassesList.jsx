@@ -5,7 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 function ClassesList(props) {
   let classesList = props.route.params.classes;
-  let editable = props.route.params.isMonitor;
+  let editable = props.route.params.editable;
   let updateClass = props.route.params.updateClass;
   let addClass = props.route.params.addClass;
   // let addClass = (newClass) => {
