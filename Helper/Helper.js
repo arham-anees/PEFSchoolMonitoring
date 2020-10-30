@@ -41,7 +41,7 @@ export function isServiceNumberValid(serviceNumber) {
 }
 export function isQualificationValid(qaulification) {
   try {
-    let regex = qaulification.match(/^[a-z]+$/);
+    let regex = qaulification.toLocaleLowerCase().match(/^[a-z]+$/);
     if (regex === null) return false;
     return regex[0] === regex.input;
   } catch {
@@ -50,11 +50,12 @@ export function isQualificationValid(qaulification) {
 }
 export function isYearValid(year) {
   try {
+    if (!isNumber(year)) return false;
+    year = parseInt(year);
     return year >= 1970 && year <= 2020;
   } catch {}
   return false;
 }
-
 export function isNameValid(institute) {
   try {
     let reg = institute.match(/[a-z\D]+$/);
@@ -63,7 +64,6 @@ export function isNameValid(institute) {
   } catch {}
   return false;
 }
-
 export function isPasswordValid(password) {
   try {
     let reg = password.match(/.*[a-zA-Z0-9@.-]/);

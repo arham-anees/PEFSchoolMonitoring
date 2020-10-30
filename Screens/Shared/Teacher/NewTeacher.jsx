@@ -44,12 +44,12 @@ class NewTeacher extends React.Component {
             style={styles.textInput}
             value={this.state.teacher.name}
             onChangeText={(text) => {
-              if (isNameValid(text)) {
-                this.state.teacher.name = text;
-                this.setState(this.state.teacher);
-              } else {
-                alert("Please enter valid characters.");
-              }
+              //if (isNameValid(text)) {
+              this.state.teacher.name = text;
+              this.setState(this.state.teacher);
+              //} else {
+              //alert("Please enter valid characters.");
+              //}
             }}
           />
         </View>
@@ -74,12 +74,12 @@ class NewTeacher extends React.Component {
             style={styles.textInput}
             value={this.state.teacher.designation}
             onChangeText={(text) => {
-              if (isNameValid(text)) {
-                this.state.teacher.designation = text;
-                this.setState(this.state.teacher);
-              } else {
-                alert("Please enter valid designation");
-              }
+              //if (isNameValid(text)) {
+              this.state.teacher.designation = text;
+              this.setState(this.state.teacher);
+              //} else {
+              //alert("Please enter valid designation");
+              //}
             }}
           />
         </View>
@@ -146,13 +146,13 @@ class NewTeacher extends React.Component {
                 placeholder="Qualification"
                 value={this.state.newQualification.name}
                 onChangeText={(text) => {
-                  if (isQualificationValid(text)) {
-                    this.state.newQualification.name = text;
-                    this.setState(this.state.newQualification);
-                  } else {
-                    alert("Please enter valid qualification.");
-                    this.setState({ refresh: true });
-                  }
+                  //if (isQualificationValid(text)) {
+                  this.state.newQualification.name = text;
+                  this.setState(this.state.newQualification);
+                  //} else {
+                  //alert("Please enter valid qualification.");
+                  //this.setState({ refresh: true });
+                  //}
                 }}
               />
               <TextInput
@@ -161,15 +161,15 @@ class NewTeacher extends React.Component {
                 placeholder="Institute"
                 value={this.state.newQualification.institute}
                 onChangeText={(text) => {
-                  if (isNameValid(text)) {
-                    this.state.newQualification.institute = text;
-                    this.setState(this.state.newQualification);
-                  } else {
-                    alert(
-                      "Please enter valid institute name. Institute name donot enter numbers."
-                    );
-                    this.setState({ refresh: true });
-                  }
+                  //if (isNameValid(text)) {
+                  this.state.newQualification.institute = text;
+                  this.setState(this.state.newQualification);
+                  //} else {
+                  // alert(
+                  //   "Please enter valid institute name. Institute name donot enter numbers."
+                  // );
+                  // this.setState({ refresh: true });
+                  //}
                 }}
               />
               <TextInput
@@ -183,14 +183,10 @@ class NewTeacher extends React.Component {
                   this.setState({ ...this.state.newQualification });
                 }}
                 onBlur={() => {
-                  if (
-                    !isYearValid(this.state.newQualification.yearOfCompletion)
-                  ) {
-                    alert("Please enter a valid year");
-                    this.state.newQualification.yearOfCompletion = "";
-                    this.setState({ ...this.state.newQualification });
-                  } else {
-                  }
+                  //  this.state.newQualification.yearOfCompletion = "";
+                  //  this.setState({ ...this.state.newQualification });
+                  //} else {
+                  //}
                 }}
               />
             </View>
@@ -200,24 +196,33 @@ class NewTeacher extends React.Component {
               containerStyle={{ marginTop: 10, marginHorizontal: 10 }}
               onPress={() => {
                 if (
-                  isYearValid(this.state.newQualification.yearOfCompletion) &&
-                  isNameValid(this.state.newQualification.institute) &&
-                  isQualificationValid(this.state.newQualification.name)
+                  !isYearValid(this.state.newQualification.yearOfCompletion)
                 ) {
-                  const newQualification = { ...this.state.newQualification };
-                  let teacher = { ...this.state.teacher };
-                  teacher.qualification.push(newQualification);
-                  this.setState({
-                    teacher,
-                    newQualification: {
-                      name: "",
-                      institute: "",
-                      yearOfCompletion: "",
-                    },
-                  });
-                } else {
-                  alert("Some values are invalid.Please enter valid values.");
+                  alert("Please enter a valid year");
+                  return;
                 }
+                if (!isNameValid(this.state.newQualification.institute)) {
+                  alert("Please enter a valid institute");
+                  return;
+                }
+                if (!isQualificationValid(this.state.newQualification.name)) {
+                  alert(
+                    this.state.newQualification.name +
+                      " is invalid. Please enter a valid name"
+                  );
+                  return;
+                }
+                const newQualification = { ...this.state.newQualification };
+                let teacher = { ...this.state.teacher };
+                teacher.qualification.push(newQualification);
+                this.setState({
+                  teacher,
+                  newQualification: {
+                    name: "",
+                    institute: "",
+                    yearOfCompletion: "",
+                  },
+                });
               }}
             />
             <Button
@@ -228,7 +233,7 @@ class NewTeacher extends React.Component {
                 if (!isCnic(this.state.cnic)) {
                   Alert.alert(
                     "Invalid CNIC",
-                    "Please enter valid 13 digit cnic with dashes."
+                    "Please enter valid 13 digit cnic."
                   );
                   return;
                 }
