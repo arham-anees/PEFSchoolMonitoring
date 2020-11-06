@@ -49,6 +49,7 @@ class School extends React.Component {
   };
 
   updateTeacher = (teacher) => {
+    console.log(teacher);
     let teachers = [...this.state.school.teachers];
     for (let i in teachers) {
       if (teachers[i].cnic === teacher.cnic) {

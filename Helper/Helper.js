@@ -50,8 +50,10 @@ export function isQualificationValid(qaulification) {
 }
 export function isYearValid(year) {
   try {
+    console.log(year);
     if (!isNumber(year)) return false;
     year = parseInt(year);
+    console.log(year);
     return year >= 1970 && year <= 2020;
   } catch {}
   return false;

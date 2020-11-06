@@ -26,6 +26,7 @@ class Teacher extends React.Component {
     this.setState({ teacher, enable: this.props.route.params.editable });
   }
   render() {
+    console.log(this.state.teacher.qualification);
     return (
       <View style={styles.container}>
         <View style={[styles.wrapper, styles.inputWrapper]}>
@@ -125,12 +126,12 @@ class Teacher extends React.Component {
                   value={this.state.newQualification.name}
                   placeholder={"Qualification"}
                   onChangeText={(text) => {
-                    if (isQualificationValid(text)) {
-                      this.state.newQualification.name = text;
-                      this.setState(this.state.newQualification);
-                    } else {
-                      alert("Please enter valid qualification");
-                    }
+                    //if (isQualificationValid(text)) {
+                    this.state.newQualification.name = text;
+                    this.setState(this.state.newQualification);
+                    //} else {
+                    //alert("Please enter valid qualification");
+                    //}
                   }}
                 />
                 <TextInput
@@ -139,12 +140,12 @@ class Teacher extends React.Component {
                   value={this.state.newQualification.institute}
                   placeholder={"Institute"}
                   onChangeText={(text) => {
-                    if (isNameValid(text)) {
-                      this.state.newQualification.institute = text;
-                      this.setState(this.state.newQualification);
-                    } else {
-                      alert("Please enter valid Institute name");
-                    }
+                    //if (isNameValid(text)) {
+                    this.state.newQualification.institute = text;
+                    this.setState(this.state.newQualification);
+                    //} else {
+                    // alert("Please enter valid Institute name");
+                    //}
                   }}
                 />
                 <TextInput
@@ -153,8 +154,8 @@ class Teacher extends React.Component {
                   editable={this.state.enable}
                   placeholder={"Year Completion"}
                   value={
-                    this.state.newQualification.qualificationInput
-                      ? this.state.newQualification.qualificationInput
+                    this.state.newQualification.yearOfCompletion
+                      ? this.state.newQualification.yearOfCompletion
                       : ""
                   }
                   onChangeText={(text) => {
